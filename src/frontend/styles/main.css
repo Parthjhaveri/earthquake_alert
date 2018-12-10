@@ -3,16 +3,42 @@ html, body {
 	overflow-x: hidden;
 	margin: 0;
 	padding: 0;
+	font-family: 'Share Tech Mono', monospace;
 }
 
+/* - - - GENERAL - - - */
 h1, h2, h3, h4, h5, h6 {
 	font-weight: 700;
 	color: #1a1a1a;
 }
 
-/*NAVBAR*/
-.appMainNav{
+input:focus, button:focus {
+	outline: 2px dotted #fff;
+}
+
+/* - - - NAVBAR - - -*/
+.app-main-nav{
 	width: auto;
-	height: 50px;
-	background-color: #eee;
+	height: auto;
+	background-color: #ffc107;
+}
+
+.app-main-nav h3 {
+	margin: 0;
+	padding: 0;
+	text-transform: uppercase;
+}
+
+/* - - - TIME NOW SECTION - - - */
+.section-time-now {
+	width: 100%;
+	height: auto;
+	background-color: #563d7c;
+	color: #fff;
+	font-size: 18px;
+}
+
+.section-time-now__heading {
+	margin: 0;
+	padding: 0;
 }

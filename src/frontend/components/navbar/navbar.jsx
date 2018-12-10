@@ -1,10 +1,9 @@
 import React from 'react';
-// import style from '../../styles/main.css';
 
 const Navbar = props => {
 
-	return <div className="appMainNav">
-ssd
+	return <div className="app-main-nav p-2">
+		<h3>Earthquake Alert</h3>
 	</div>
 
 }
