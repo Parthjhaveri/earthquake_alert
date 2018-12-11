@@ -27,24 +27,18 @@ class TimeNow extends Component {
 		
 		// DISPATCH THE CURRENT TIME TO THE STORE
 		store.dispatch({ type: 'SHOW-DATE', payload: now });
-
 	}
 
 	componentDidMount() {		
-		
 		var time_now = store.getState()
-		
-		this.setState({ 
-			current_time: time_now.quake_data[0]
-		});
-
+		this.setState({ current_time: time_now.quake_data[0] });
 	}
 
 	render() {
 		return (
-			<div className='section-time-now p-2'>
+			<div className='section-time-now'>
 				<p className='section-time-now__heading'>
-					{this.state.current_time}
+					Today is {this.state.current_time}
 				</p>
 			</div>
 		)
