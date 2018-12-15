@@ -32,13 +32,41 @@ class QuakeFeed extends Component {
 		// SEGREGATE MONTH AND RETURN NUMBER INSTEAD OF MONTH		
 		let date_arr = split_date.slice(1,4);
 
-		// SHUFFLE ARRAY TO PROPER FORMAT		
-		console.log(date_arr);
+		// SHUFFLE ARRAY TO PROPER FORMAT			
+		let year  = date_arr[2];
+		let month = date_arr[0];
+		let day   = date_arr[1];
+
+		// IF MONTH STRING, PARSE TO NUMERIC
+		  month === 'Dec' ? month = '12' 
+		: month === 'Nov' ? month = '11' 
+		: month === 'Oct' ? month = '10' 
+		: month === 'Sep' ? month = '09' 
+		: month === 'Aug' ? month = '08' 
+		: month === 'Jul' ? month = '07'
+		: month === 'Jun' ? month = '06' 
+		: month === 'May' ? month = '05' 
+		: month === 'Apr' ? month = '04' 
+		: month === 'Mar' ? month = '03' 
+		: month === 'Feb' ? month = '02' 
+		: month === 'Jan' ? month = '01' 
+		: null;
+
+		// TODAY USING MODIFIED YEAR, MONTH, DATE
+		const today = [year, month, day]
 		
-		// USE THE date_arr VARIABLE TO CONVERT THE MONTH INTO A NUMBER AND PLUG INTO FETCH CALL
-		// 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-02'
-		// fetch ('https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime='+ date_arr[2] +
-		// 	   '-' + date_arr[] + '-01&endtime=2014-01-02')
+		// USE THE VARIABLES TO PLUG IN YEAR, MONTH, DAY AND INITIATE FETCH CALL
+		fetch ('https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=' + year + 
+			   '-' + month + '-' + day + '&minmagnitude=5')
+
+		.then((response) => {
+			return response.json();
+		})
+
+		.then((json) => {
+			console.log(json);
+		})
+
 	
 	}
 
