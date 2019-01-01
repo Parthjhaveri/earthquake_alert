@@ -31,14 +31,14 @@ class TimeNow extends Component {
 
 	componentDidMount() {		
 		var time_now = store.getState()
-		this.setState({ current_time: time_now.quake_data[0] });
+		this.setState({ current_time: time_now.quake_data[0] });		
 	}
 
 	render() {
 		return (
 			<div className='section-time-now'>
 				<p className='section-time-now__heading'>
-					Today is {this.state.current_time}
+					Today is {new Date(this.state.current_time).toLocaleString()}
 				</p>
 			</div>
 		)
