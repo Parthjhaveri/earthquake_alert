@@ -16,9 +16,6 @@ class QuakeFeed extends Component {
 	constructor (props) {
 		super(props);	
 
-		// BIND METHODS
-		this.feedTable = this.feedTable.bind(this);
-
 		this.state = {
 			current_quakes: []
 		}
@@ -142,10 +139,6 @@ class QuakeFeed extends Component {
 
 		repeat_fetch();
 
-	}
-
-	feedTable() {
-		console.log('Feeed table!');
 	}
 
 	render() {
