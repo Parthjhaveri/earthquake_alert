@@ -8,6 +8,9 @@ import { createStore, combineReducers } from 'redux';
 import store from '../../../redux-config/store/store.js';
 import showCurrentTime from '../../../redux-config/actions/actions.js';
 
+// COMPONENT IMPORTS
+import FeedTable from './feed-table.jsx';
+
 class QuakeFeed extends Component {
 
 	constructor (props) {
@@ -87,13 +90,13 @@ class QuakeFeed extends Component {
 					component_scope.setState({current_quakes: fetched_req});					
 					
 					// LOG CURRENT EARTHQUAKES
-					console.log('Data', component_scope.state.current_quakes);
+					// console.log('Data', component_scope.state.current_quakes);
 
 					// CURRENT EARTHQUAKES
 					const quakes = [].slice.call(component_scope.state.current_quakes.quake_data);
 					
 					// STORE QUAKES IN OBJECT TO PACKAGE AND PUSH INTO REDUX STORE
-					let quake_table_data = {};
+					let quake_table_data = {};					
 					
 					for (var i = 0; i < quakes[0].length; i++) {
 
@@ -105,16 +108,17 @@ class QuakeFeed extends Component {
 						quake_table_data.loc = quake_location;
 						quake_table_data.mg  = quake_mag;
 						quake_table_data.tim = quake_time;
-
-						console.log(quake_table_data);
+						
+						// console.log(quake_table_data);
+						
 						/* 
 							PUSHES THIS OBJECT TO THE REDUX STORE SO THAT YOU CAN ACCESS IT INSIDE 
 							THE FEED TABLE COMPONENT AND CREATE A DYNAMIC TABLE	
 						*/
-						store.dispatch({ type: 'FETCH-RESPONSE', payload: quake_table_data });
-					}
-
-					
+						store.dispatch({ type: 'STORE-QUAKES', payload: quake_table_data });
+					}					
+				
+					console.log('STORE DATA ', store.getState());
 						
 				})					
 			// -------------------------------------------------
@@ -148,17 +152,7 @@ class QuakeFeed extends Component {
 		return (
 			<div className='section-quake-feed'>
 				
-				<table className='section-quake-feed__quake-feed-table'>
-				  	<tbody className='quake-feed-table__quake-feed-table-body'>
-						<tr className='quake-feed-table-body__table-heading-row'>
-							<th>Location</th>
-					    	<th>Magnitude</th>
-					    	<th>Time</th>
-						</tr>				 
-
-					</tbody>
-				  
-				</table>
+				<FeedTable />
 
 			</div>
 		)

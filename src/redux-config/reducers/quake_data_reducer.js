@@ -9,6 +9,11 @@ const quake_data_reducer = (state=[], action) => {
 		case 'FETCH-RESPONSE':
 			return [action.payload]
 
+		case 'STORE-QUAKES':
+			let quake_arr = [];
+			quake_arr.push(...state);
+			return quake_arr;
+
 		default:
 			return state
 	}
