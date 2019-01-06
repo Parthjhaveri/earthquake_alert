@@ -61,8 +61,8 @@ class QuakeFeed extends Component {
 		let yesterday = day - 1;		
 		yesterday.toString();
 
+		// FETCH CALL TO GET DATA (ARROW FUNCTION TO BIND TO PARENT SCOPE)
 		const repeat_fetch = () => {
-
 
 			// ----------------- INITIAL FETCH -----------------
 				// USE THE VARIABLES TO PLUG IN YEAR, MONTH, DAY AND INITIATE FETCH CALL
@@ -73,7 +73,8 @@ class QuakeFeed extends Component {
 					return response.json();
 				})
 
-				.then((json) => {			
+				.then((json) => {		
+
 					let eq_props = json.features;
 
 					store.dispatch({ type: 'FETCH-RESPONSE', payload: eq_props })
@@ -110,11 +111,10 @@ class QuakeFeed extends Component {
 						*/
 						store.dispatch({ type: 'STORE-QUAKES', payload: quake_table_data });
 					}					
-				
-					// console.log('STORE DATA ', store.getState());
-					// console.log('STORE DATA ', this.props.e_quakes[0]);
+					
+					// GET PROPS FROM mapStateToProps OF REDUX STATE AND SET STATE					
 					this.setState({ quakes_list: this.props.e_quakes[0]});
-					console.log(this.state.quakes_list);
+					console.log('QUAKES LIST COMPONENT STATE ', this.state.quakes_list);					
 						
 				})					
 			// -------------------------------------------------
@@ -128,26 +128,21 @@ class QuakeFeed extends Component {
 					return response.json();
 				})
 
-				.then((json) => {			
-					// console.log('RESPONSE AFTER 5 MINUTES ', json);
+				.then((json) => {								
 					repeat_fetch();		
 				})
 			}, 330000);
 		
-		} // END repeat_fetch()
+		} // END repeat_fetch()		
+		repeat_fetch();			
 
-		// BIND TO THIS
-		this.repeat_fetch = repeat_fetch.bind(this);		
-
-		repeat_fetch();
-		console.log(this.repeat_fetch)
 	}
 
 	render() {
 		return (
 			<div className='section-quake-feed'>
 				
-				<FeedTable fetchCall={this.state.quakes_list} test={'TESTING'} />				
+				<FeedTable fetch_call={this.quake_info} test={'TESTING'} />
 
 			</div>
 		)

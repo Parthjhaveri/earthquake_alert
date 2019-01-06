@@ -21,7 +21,7 @@ class FeedTable extends Component {
 	}
 
 	componentDidMount() {
-		console.log(this.props);
+		console.log(this.props.fetch_call);
 
 		// STORE SCOPE
 		// var component_scp = this;
