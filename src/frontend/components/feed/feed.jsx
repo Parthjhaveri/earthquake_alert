@@ -14,10 +14,11 @@ import FeedTable from './feed-table.jsx';
 class QuakeFeed extends Component {
 
 	constructor (props) {
-		super(props);	
+		super(props);
 
 		this.state = {
-			current_quakes: []
+			current_quakes: [],
+			quakes_list: []
 		}
 	}
 
@@ -59,11 +60,8 @@ class QuakeFeed extends Component {
 		const today = [year, month, day]
 		let yesterday = day - 1;		
 		yesterday.toString();
-		
-		// COMPONENT SCOPE
-		var component_scope = this;
 
-		function repeat_fetch() {
+		const repeat_fetch = () => {
 
 
 			// ----------------- INITIAL FETCH -----------------
@@ -84,13 +82,13 @@ class QuakeFeed extends Component {
 					let fetched_req = store.getState();
 					
 					// SET COMPONENT STATE TO STATE FROM REDUX STORE
-					component_scope.setState({current_quakes: fetched_req});					
+					this.setState({current_quakes: fetched_req});					
 					
 					// LOG CURRENT EARTHQUAKES
-					// console.log('Data', component_scope.state.current_quakes);
+					// console.log('Data', this.state.current_quakes);
 
 					// CURRENT EARTHQUAKES
-					const quakes = [].slice.call(component_scope.state.current_quakes.quake_data);
+					const quakes = [].slice.call(this.state.current_quakes.quake_data);
 					
 					// STORE QUAKES IN OBJECT TO PACKAGE AND PUSH INTO REDUX STORE
 					let quake_table_data = {};					
@@ -104,9 +102,7 @@ class QuakeFeed extends Component {
 
 						quake_table_data.loc = quake_location;
 						quake_table_data.mg  = quake_mag;
-						quake_table_data.tim = quake_time;
-						
-						// console.log(quake_table_data);
+						quake_table_data.tim = quake_time;						
 						
 						/* 
 							PUSHES THIS OBJECT TO THE REDUX STORE SO THAT YOU CAN ACCESS IT INSIDE 
@@ -115,7 +111,10 @@ class QuakeFeed extends Component {
 						store.dispatch({ type: 'STORE-QUAKES', payload: quake_table_data });
 					}					
 				
-					console.log('STORE DATA ', store.getState());
+					// console.log('STORE DATA ', store.getState());
+					// console.log('STORE DATA ', this.props.e_quakes[0]);
+					this.setState({ quakes_list: this.props.e_quakes[0]});
+					console.log(this.state.quakes_list);
 						
 				})					
 			// -------------------------------------------------
@@ -137,20 +136,36 @@ class QuakeFeed extends Component {
 		
 		} // END repeat_fetch()
 
-		repeat_fetch();
+		// BIND TO THIS
+		this.repeat_fetch = repeat_fetch.bind(this);		
 
+		repeat_fetch();
+		console.log(this.repeat_fetch)
 	}
 
 	render() {
 		return (
 			<div className='section-quake-feed'>
 				
-				<FeedTable />
+				<FeedTable fetchCall={this.state.quakes_list} test={'TESTING'} />				
 
 			</div>
 		)
 	}
 }
 
+function mapStateToProps(state) {
+	return {
+		e_quakes: state.quake_data
+	}
+}
 
-export default QuakeFeed;
+export default connect(mapStateToProps)(QuakeFeed);
+
+
+
+
+
+
+
+

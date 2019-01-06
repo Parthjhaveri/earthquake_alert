@@ -13,13 +13,32 @@ class FeedTable extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
+		this.generate_table = this.generate_table.bind(this);
 
+		this.state = {
+			curr_quakes: []
 		}
 	}
 
 	componentDidMount() {
-		console.log(store.getState());
+		console.log(this.props);
+
+		// STORE SCOPE
+		// var component_scp = this;
+		
+		// setTimeout(function() {
+		// 	// STORE STATE FROM REDUX STORE
+		// 	const current_earthquakes = store.getState();
+
+		// 	// SET STATE
+		// 	component_scp.setState({ curr_quakes: current_earthquakes });			
+		// 	// console.log('* ', component_scp.state.curr_quakes.quake_data[0]);
+		// }, 1000);
+	}
+
+	generate_table() {		
+
+		// console.log(store.getState());
 	}
 
 	render() {
@@ -31,7 +50,10 @@ class FeedTable extends Component {
 						<th>Location</th>
 				    	<th>Magnitude</th>
 				    	<th>Time</th>
-					</tr>				 
+					</tr>		
+					{
+						this.generate_table()
+					}		 
 
 				</tbody>
 			  
@@ -42,4 +64,4 @@ class FeedTable extends Component {
 
 }
 
-export default FeedTable;
+export default FeedTable
