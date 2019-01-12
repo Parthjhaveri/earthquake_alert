@@ -110,13 +110,13 @@ class QuakeFeed extends Component {
 							THE FEED TABLE COMPONENT AND CREATE A DYNAMIC TABLE	
 						*/
 						store.dispatch({ type: 'STORE-QUAKES', payload: quake_table_data });
-					}					
+					} // END LOOP					
 					
 					// GET PROPS FROM mapStateToProps OF REDUX STATE AND SET STATE					
 					this.setState({ quakes_list: this.props.e_quakes[0]});
-					console.log('QUAKES LIST COMPONENT STATE ', this.state.quakes_list);					
-						
-				})					
+					// console.log('QUAKES LIST COMPONENT STATE ', this.state.quakes_list);
+				})
+
 			// -------------------------------------------------
 
 			setTimeout(function() {
@@ -133,16 +133,21 @@ class QuakeFeed extends Component {
 				})
 			}, 330000);
 		
-		} // END repeat_fetch()		
-		repeat_fetch();			
+		} // END repeat_fetch()
 
+		repeat_fetch();
 	}
 
 	render() {
 		return (
 			<div className='section-quake-feed'>
-				
-				<FeedTable fetch_call={this.quake_info} test={'TESTING'} />
+				{
+					this.state.quakes_list.length ? (
+						<FeedTable fetch_call={this.state.quakes_list} test={'TESTING'} />
+					) : (						
+						<h4 className='section-quake-feed__loading'>Loading...</h4>
+					)
+				}
 
 			</div>
 		)

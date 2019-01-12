@@ -20,25 +20,13 @@ class FeedTable extends Component {
 		}
 	}
 
-	componentDidMount() {
-		console.log(this.props.fetch_call);
-
-		// STORE SCOPE
-		// var component_scp = this;
-		
-		// setTimeout(function() {
-		// 	// STORE STATE FROM REDUX STORE
-		// 	const current_earthquakes = store.getState();
-
-		// 	// SET STATE
-		// 	component_scp.setState({ curr_quakes: current_earthquakes });			
-		// 	// console.log('* ', component_scp.state.curr_quakes.quake_data[0]);
-		// }, 1000);
-	}
-
 	generate_table() {		
 
-		// console.log(store.getState());
+		console.log('GENERATE TABLE ', this.props.fetch_call);
+
+		// GENERATE DYNAMIC TABLE INSIDE WHICH WE RENDER THE LOCATION, MAGNITUDE AND TIME OF THE EARTHQUAKE
+		
+
 	}
 
 	render() {

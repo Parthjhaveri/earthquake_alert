@@ -107,6 +107,13 @@ th {
 	overflow-y: scroll;
 }
 
+/*FEED TABLE STYLES*/
+
+/*LOADING*/
+.section-quake-feed__loading {
+	margin-top: 100px;
+}
+
 
 
 
