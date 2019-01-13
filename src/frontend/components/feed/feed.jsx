@@ -143,7 +143,7 @@ class QuakeFeed extends Component {
 			<div className='section-quake-feed'>
 				{
 					this.state.quakes_list.length ? (
-						<FeedTable fetch_call={this.state.quakes_list} test={'TESTING'} />
+						<FeedTable fetch_call={this.state.quakes_list} />
 					) : (						
 						<h4 className='section-quake-feed__loading'>Loading...</h4>
 					)

@@ -105,13 +105,24 @@ th {
 	text-align: center;
 	box-sizing: border-box;	
 	overflow-y: scroll;
+	font-weight: 100;
 }
 
 /*FEED TABLE STYLES*/
 
+/*FEED TABLE HEADING*/
+.quake-feed-table-body__table-heading-row {
+	width: 100%;
+	position: relative;
+	top: 0;
+	left: 0;
+}
+
 /*LOADING*/
 .section-quake-feed__loading {
 	margin-top: 100px;
+	font-style: 16px;
+	font-weight: 100;
 }
 
 
