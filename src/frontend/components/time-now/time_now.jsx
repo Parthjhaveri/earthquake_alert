@@ -53,16 +53,4 @@ function mapStateToProps (state) {
 	}
 }
 
-// // COONNECTS ALL OUR ACTIONS TO PROPS
-// function mapDispatchToProps (dispatch) {
-// 	return {
-
-// 		showCurrentTime: (time) => {
-// 			dispatch({ type: 'SHOW-DATE', payload: time });
-// 		},
-
-// 	}
-
-// }
-
 export default connect(mapStateToProps)(TimeNow);

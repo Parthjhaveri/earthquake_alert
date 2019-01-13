@@ -23,6 +23,11 @@ class FeedTable extends Component {
 		}
 	}
 
+	componentDidMount() {
+		console.log(this.props.fetch_call);
+		store.dispatch({ type: 'MAP-DATA', payload: this.props.fetch_call });
+	}
+
 	genereate_table() {		
 
 		/*  GENERATE DYNAMIC TABLE INSIDE WHICH WE RENDER THE LOCATION, 
@@ -37,12 +42,10 @@ class FeedTable extends Component {
 			this.props.fetch_call.forEach((el, idx) => {
 				const quake_loc  = el.properties.place; // QUAKE LOCATION
 				const quake_mag  = el.properties.mag;   // QUAKE MAGNITUDE
-				const quake_time = new Date(el.properties.time).toLocaleString(); // QUAKE TIME
-				
-				console.log(quake_loc, quake_mag, quake_time);
+				const quake_time = new Date(el.properties.time).toLocaleString(); // QUAKE TIME								
 
 				table_rows.push(
-					<tr key={idx}>
+					<tr className='quake-feed-table-body__table-row-dynamic' key={idx}>
 						<td>{quake_loc}</td>
 						<td>{quake_mag}</td>
 						<td>{quake_time}</td>
@@ -52,6 +55,7 @@ class FeedTable extends Component {
 			});
 
 			table.push(table_rows);
+
 
 		return table;
 	}
@@ -75,4 +79,8 @@ class FeedTable extends Component {
 
 }
 
-export default FeedTable
+export default FeedTable;
+
+
+
+

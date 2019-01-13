@@ -100,7 +100,7 @@ th {
 	height: 400px;
 	background-color: transparent;
 	border: 5px solid #563d7c;
-	color: #eee;
+	color: #ffffff;
 	font-size: 18px;	
 	text-align: center;
 	box-sizing: border-box;	
@@ -109,6 +109,12 @@ th {
 }
 
 /*FEED TABLE STYLES*/
+/*LOADING*/
+.section-quake-feed__loading {
+	margin-top: 100px;
+	font-style: 16px;
+	font-weight: 100;
+}
 
 /*FEED TABLE HEADING*/
 .quake-feed-table-body__table-heading-row {
@@ -118,13 +124,21 @@ th {
 	left: 0;
 }
 
-/*LOADING*/
-.section-quake-feed__loading {
-	margin-top: 100px;
-	font-style: 16px;
-	font-weight: 100;
+/*DYNAMIC TABLE ROWS*/
+.quake-feed-table-body__table-row-dynamic:hover {
+	cursor: pointer;
+	background-color: #000000;
 }
 
+/*QUAKE MAP*/
+.leaflet-container {
+    height: 400px;
+    width: 100%;
+}
+
+.section-quake-map {
+	color: #ffffff;
+}
 
 
 

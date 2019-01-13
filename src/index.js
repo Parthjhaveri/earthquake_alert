@@ -4,10 +4,12 @@ import ReactDOM from "react-dom";
 import { Provider } from 'react-redux';
 import style from './frontend/styles/main.css';
 
+
 // COMPONENT IMPORTS
 import Navbar from './frontend/components/navbar/navbar.jsx';
 import TimeNow from './frontend/components/time-now/time_now.jsx';
 import QuakeFeed from './frontend/components/feed/feed.jsx';
+import QuakeMap from './frontend/components/map/quake_map.jsx';
 
 // REDUX IMPORTS
 import store from './redux-config/store/store.js';
@@ -46,7 +48,7 @@ class Index extends Component {
 				  </div>
 				  
 				  <div className="col-md-7">
-				  	
+				  	<QuakeMap />
 				  </div>
 
 				</div>
