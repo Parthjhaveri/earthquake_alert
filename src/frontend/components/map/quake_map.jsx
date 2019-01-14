@@ -19,13 +19,28 @@ class QuakeMap extends Component {
 
 		this.state = {
 			lat: 51.505,
-      		lng: -0.09,
-      		zoom: 13,
+      		long: -0.09,
+      		zoom: 3,
 		}
 	}
 
-	componentDidMount() {
-		console.log(store.getState());
+	componentDidMount() {		
+
+		setTimeout(function() {
+			// STORE STATE
+			let store_state = store.getState(); 
+			
+			// FIRST ELEMENT OF ARRAY TO INITIALIZE MAP
+			const quake_arr = store_state.quake_data[0]; 
+			
+			// LAT, LONG
+			let quake_long = quake_arr[0].geometry.coordinates[0];
+			let quake_lat  = quake_arr[0].geometry.coordinates[1];
+			
+			// MOST RECENT EARTHQUAKE
+			this.setState({ lat: quake_lat, long: quake_long });
+			
+		}.bind(this), 1000);
 	}
 
 	handle_map_change() {
@@ -33,7 +48,7 @@ class QuakeMap extends Component {
 	}
 
 	render() {
-		const position = [this.state.lat, this.state.lng];
+		const position = [this.state.lat, this.state.long];
 
 		return (
 			<div className='section-quake-map'>

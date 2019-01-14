@@ -25,6 +25,8 @@ class FeedTable extends Component {
 
 	componentDidMount() {
 		console.log(this.props.fetch_call);
+
+		// DISPATCH QUAKES TO REDUX STORE TO DISPLAY IN MAP
 		store.dispatch({ type: 'MAP-DATA', payload: this.props.fetch_call });
 	}
 

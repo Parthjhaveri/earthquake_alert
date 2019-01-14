@@ -10,7 +10,7 @@ const quake_data_reducer = (state=[], action) => {
 			return [action.payload]
 
 		case 'MAP-DATA':
-			return [...state, action.payload]
+			return [action.payload]
 
 		case 'STORE-QUAKES':
 			let quake_arr = [];
