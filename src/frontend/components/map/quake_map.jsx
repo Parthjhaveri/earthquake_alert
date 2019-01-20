@@ -15,8 +15,6 @@ class QuakeMap extends Component {
 	constructor(props) {
 		super(props);
 
-		this.handle_map_change = this.handle_map_change.bind(this);
-
 		this.state = {
 			lat: 51.505,
       		long: -0.09,
@@ -39,32 +37,23 @@ class QuakeMap extends Component {
 			
 			// MOST RECENT EARTHQUAKE
 			this.setState({ lat: quake_lat, long: quake_long });
-			
 		}.bind(this), 1000);
-	}
-
-	handle_map_change() {
-		
+		console.log(this.props);
+		// change_func(event);
 	}
 
 	render() {
 		const position = [this.state.lat, this.state.long];
 
 		return (
-			<div className='section-quake-map'>
+			<div className='section-quake-map p-2'>
 				<Map center={position} zoom={this.state.zoom}>
 			        <TileLayer
 			          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			          url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
 			        />
-			        <Marker position={position}>
-			          <Popup>
-			            <span>A pretty CSS3 popup. <br/> Easily customizable.</span>
-			          </Popup>
-			        </Marker>
+			        <Marker position={position} />
 			     </Map>
-
-
 			</div>
 		)
 

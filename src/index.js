@@ -9,6 +9,7 @@ import style from './frontend/styles/main.css';
 import Navbar from './frontend/components/navbar/navbar.jsx';
 import TimeNow from './frontend/components/time-now/time_now.jsx';
 import QuakeFeed from './frontend/components/feed/feed.jsx';
+import change_func from './frontend/components/feed/feed-table.jsx';
 import QuakeMap from './frontend/components/map/quake_map.jsx';
 
 // REDUX IMPORTS
@@ -48,7 +49,7 @@ class Index extends Component {
 				  </div>
 				  
 				  <div className="col-md-7">
-				  	<QuakeMap />
+				  	<QuakeMap map_change={change_func} />
 				  </div>
 
 				</div>
