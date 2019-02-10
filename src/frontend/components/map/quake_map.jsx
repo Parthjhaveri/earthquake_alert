@@ -11,6 +11,7 @@ import store from '../../../redux-config/store/store.js';
 import showCurrentTime from '../../../redux-config/actions/actions.js';
 
 import change_pin from '../feed/feed-table.jsx';
+import genereate_table from '../feed/feed-table.jsx';
 
 class QuakeMap extends Component {
 
@@ -46,19 +47,33 @@ class QuakeMap extends Component {
 
 	render() {
 		const position = [this.state.lat, this.state.long];
-		// console.log(this.props.coord_lat, this.props.coord_lng);	
+		
+		// GET & PARSE DYNMAIC LAT, LONG FOR EACH CLICK
+		let curr_lat = parseFloat(this.props.coord_lat);
+		let curr_lng = parseFloat(this.props.coord_lng);
 
-		return (
-			<div className='section-quake-map p-2'>
-				<Map center={position} zoom={this.state.zoom}>
-			        <TileLayer
-			          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-			          url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-			        />
-			        <Marker position={position} />
-			     </Map>
-			</div>
-		)
+		// UPDATED DYNAMIC POSITION
+		const updated_position = [curr_lat, curr_lng];
+
+		if (position) {
+			return (
+				<div className='section-quake-map p-2'>
+					<Map center={position} zoom={this.state.zoom}>
+				        <TileLayer
+				          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+				          url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'				          	
+				        />
+				        <Marker position={position} />
+				     </Map>
+				</div>
+			)
+		} else {
+			return (
+				<div className='section-quake-map p-2'>
+					<h1>Loading...</h1>
+				</div>				
+			)
+		}		
 
 	}
 
