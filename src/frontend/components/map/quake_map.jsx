@@ -10,6 +10,8 @@ import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
 import store from '../../../redux-config/store/store.js';
 import showCurrentTime from '../../../redux-config/actions/actions.js';
 
+import change_pin from '../feed/feed-table.jsx';
+
 class QuakeMap extends Component {
 
 	constructor(props) {
@@ -37,9 +39,10 @@ class QuakeMap extends Component {
 			
 			// MOST RECENT EARTHQUAKE
 			this.setState({ lat: quake_lat, long: quake_long });
+
+			console.log(this.props);
 		}.bind(this), 1000);
-		console.log(this.props);
-		// change_func(event);
+		
 	}
 
 	render() {

@@ -9,23 +9,35 @@ import style from './frontend/styles/main.css';
 import Navbar from './frontend/components/navbar/navbar.jsx';
 import TimeNow from './frontend/components/time-now/time_now.jsx';
 import QuakeFeed from './frontend/components/feed/feed.jsx';
-import change_func from './frontend/components/feed/feed-table.jsx';
+import change_pin from './frontend/components/feed/feed-table.jsx';
 import QuakeMap from './frontend/components/map/quake_map.jsx';
 
 // REDUX IMPORTS
 import store from './redux-config/store/store.js';
 
 class Index extends Component {
-  render() {
-  		{
-	  		/* 
-	  			SKELETON BOOTSTRAP LAYOUT WITH COMPONENTS
-	  			BEING RENDERED WHERE NECESSARY
-	  		*/	
-	  	}
+	constructor(props) {
+		super(props);
+		this.state = {
+			cor_lat: '',
+			cor_lng: ''
+		}
+	}
+
+	change_coords(event) {
+				
+
+		this.setState({ 
+			cor_lat: event.target.dataset.lat,
+			cor_lng: event.target.dataset.lng,
+		});
+
+	}
+
+  	render() {
   	return (
 	  
-  		<div className='app-main-wrapper'>
+  		<div className='app-main-wrapper' onClick={this.change_coords.bind(this)}>
   				<Navbar />
   			
   			<div className="container-fluid">
@@ -49,7 +61,7 @@ class Index extends Component {
 				  </div>
 				  
 				  <div className="col-md-7">
-				  	<QuakeMap map_change={change_func} />
+				  	<QuakeMap map_change={change_pin} coords={this.state.cor_lat, this.state.cor_lng} />
 				  </div>
 
 				</div>

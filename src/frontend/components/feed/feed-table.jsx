@@ -14,9 +14,11 @@ class FeedTable extends Component {
 		super(props);
 
 		this.genereate_table = this.genereate_table.bind(this);
+		this.change_pin = this.change_pin.bind(this);
 
 		this.state = {
-			curr_quakes: []
+			curr_quakes: [],
+			coord_func: []
 		}
 	}
 
@@ -47,7 +49,7 @@ class FeedTable extends Component {
 			
 
 				table_rows.push(
-					<tr className='quake-feed-table-body__table-row-dynamic' key={idx} onClick={(event) => {this.change_pin(event)}} ref={c => this.current_row = c}>
+					<tr className='quake-feed-table-body__table-row-dynamic' key={idx} onClick={this.props.onClick} onClick={(event) => {this.change_pin(event)}} ref={c => this.current_row = c}>
 						<td data-location={quake_loc} data-lat={quake_lat} data-lng={quake_long}>{quake_loc}</td>
 						<td data-mag={quake_mag} data-lat={quake_lat} data-lng={quake_long}>{quake_mag}</td>
 						<td data-time={quake_time} data-lat={quake_lat} data-lng={quake_long}>{quake_time}</td>
@@ -61,7 +63,7 @@ class FeedTable extends Component {
 		return table;
 	}
 
-	change_pin(event) {
+	change_pin(event) {		
 
 		// STORE LAT LONG AND SEND FUNCTION AS PROPS TO QUAKE MAP
 		var change_func = (event) => {
@@ -71,23 +73,22 @@ class FeedTable extends Component {
 			var click_long = event.currentTarget.children[2].dataset.lng; // SEND THESE AS PROPS TO QUAKE MAP
 			console.log(click_lat, click_long);
 		}
-		
-		store.dispatch({ type: 'MAP-COORDS', payload: change_func });
-		// change_func(event);
+		change_func(event);
+		// store.dispatch({ type: 'MAP-COORDS', payload: change_func(event) });	
 	}
 
 	render() {
 
 		return (
 			<table className='section-quake-feed__quake-feed-table'>
-				  	<tbody className='quake-feed-table__quake-feed-table-body'>
-						<tr className='quake-feed-table-body__table-heading-row'>
-							<th>Location</th>							
-							<th>Magnitude</th>							
-							<th>Time</th>
-						</tr>							
-			  			{ this.genereate_table() }
-					</tbody>
+			  	<tbody className='quake-feed-table__quake-feed-table-body'>
+					<tr className='quake-feed-table-body__table-heading-row'>
+						<th>Location</th>							
+						<th>Magnitude</th>							
+						<th>Time</th>
+					</tr>							
+		  			{ this.genereate_table() }
+				</tbody>
 			</table>
 		)
 

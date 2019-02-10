@@ -6,6 +6,11 @@ html, body {
 	font-family: 'Share Tech Mono', monospace;
 }
 
+/*UTILITY*/
+.active_li {
+	background-color: #1a1a1a;
+}
+
 /* - - - GENERAL - - - */
 h1, h2, h3, h4, h5, h6 {
 	font-weight: 700;
