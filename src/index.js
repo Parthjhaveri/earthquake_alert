@@ -61,7 +61,7 @@ class Index extends Component {
 				  </div>
 				  
 				  <div className="col-md-7">
-				  	<QuakeMap map_change={change_pin} coords={this.state.cor_lat, this.state.cor_lng} />
+				  	<QuakeMap map_change={change_pin} coord_lat={this.state.cor_lat} coord_lng={this.state.cor_lng} />
 				  </div>
 
 				</div>

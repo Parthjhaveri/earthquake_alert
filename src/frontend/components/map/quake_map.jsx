@@ -40,13 +40,13 @@ class QuakeMap extends Component {
 			// MOST RECENT EARTHQUAKE
 			this.setState({ lat: quake_lat, long: quake_long });
 
-			console.log(this.props);
 		}.bind(this), 1000);
 		
 	}
 
 	render() {
 		const position = [this.state.lat, this.state.long];
+		// console.log(this.props.coord_lat, this.props.coord_lng);	
 
 		return (
 			<div className='section-quake-map p-2'>
