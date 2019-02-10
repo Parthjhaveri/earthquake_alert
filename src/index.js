@@ -20,16 +20,19 @@ class Index extends Component {
 		super(props);
 		this.state = {
 			cor_lat: '',
-			cor_lng: ''
+			cor_lng: '',
+			table_node: ''
 		}
 	}
 
 	change_coords(event) {
 				
+		var feed_table = event._targetInst.stateNode.parentNode.parentNode;
 
 		this.setState({ 
 			cor_lat: event.target.dataset.lat,
 			cor_lng: event.target.dataset.lng,
+			table_node: feed_table
 		});
 
 	}
@@ -61,7 +64,7 @@ class Index extends Component {
 				  </div>
 				  
 				  <div className="col-md-7">
-				  	<QuakeMap map_change={change_pin} coord_lat={this.state.cor_lat} coord_lng={this.state.cor_lng} />
+				  	<QuakeMap map_change={change_pin} table_body={this.state.table_node} coord_lat={this.state.cor_lat} coord_lng={this.state.cor_lng} />
 				  </div>
 
 				</div>

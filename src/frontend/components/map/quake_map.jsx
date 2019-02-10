@@ -43,6 +43,8 @@ class QuakeMap extends Component {
 
 		}.bind(this), 1000);
 		
+		// ADD AN ON-CHANGE TO THE TABLE AND SET STATE OF LAT AND LONG
+		console.log(this.props.table_body);
 	}
 
 	render() {
@@ -54,6 +56,7 @@ class QuakeMap extends Component {
 
 		// UPDATED DYNAMIC POSITION
 		const updated_position = [curr_lat, curr_lng];
+		
 
 		if (position) {
 			return (
