@@ -72,6 +72,7 @@ class FeedTable extends Component {
 			var click_lat = event.currentTarget.children[1].dataset.lat; 
 			var click_long = event.currentTarget.children[2].dataset.lng; // SEND THESE AS PROPS TO QUAKE MAP
 			console.log(click_lat, click_long);
+			
 			return event.currentTarget;
 		}
 		change_func(event);	
