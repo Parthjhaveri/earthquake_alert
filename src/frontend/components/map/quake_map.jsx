@@ -46,14 +46,14 @@ class QuakeMap extends Component {
 
 			// ON CHANGE, SET POSITION TO UPDATED POSITION		
 			this.change_location();
-		}.bind(this), 1000);
+		}.bind(this), 100);
 
 		
 	}
 
 	change_location() {		
 		
-		let position = [this.state.lat, this.state.long];
+		var position = [this.state.lat, this.state.long];
 	
 		let table_bod = document.getElementsByClassName('quake-feed-table-body__table-row-dynamic');
 		
@@ -63,16 +63,22 @@ class QuakeMap extends Component {
 
 		// UPDATED DYNAMIC POSITION
 		let updated_position = [curr_lat, curr_lng];
+
+		// SET STATE OF COMPONENT TO NEW LAT LONG WHEN TABLE IS CLICKED
+		const set_parent_st = () => {
+			this.setState({lat: position[0], long: position[1]});
+		};
 		
 		for (var i = 0; i < table_bod.length; i++) {
-			table_bod[i].addEventListener('click', function() {				
+			table_bod[i].addEventListener('click', function() {	
+				
 				position[0] = parseFloat(this.children[0].attributes[1].value);
 				position[1] = parseFloat(this.children[0].attributes[2].value);
-				console.log(position);
+				
+				set_parent_st();								
+								
 			})
 		}
-	
-		return position;
 	}
 
 	render() {
