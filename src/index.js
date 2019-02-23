@@ -52,7 +52,7 @@ class Index extends Component {
 				  </div>
 				  
 				  <div className="col-md-7 app-main-wrapper__heading mt-2 px-2">
-				  	<p>All Earthquakes below in past hour</p>
+				  	<p>All Earthquakes below in past 24 hours</p>
 				  </div>
 
 				</div>

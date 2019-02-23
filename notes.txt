@@ -1,0 +1,6 @@
+------------------
+Upcoming features:
+------------------
+- Line graph of EQ over x amout of time
+- Data persistence
+- Sort, Filter quakes

@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 
-import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
+import { Map, Marker, Popup, GeoJSON, TileLayer } from 'react-leaflet';
 
 // REDUX IMPORTS
 import store from '../../../redux-config/store/store.js';
@@ -24,13 +24,14 @@ class QuakeMap extends Component {
 		this.state = {
 			lat: 51.505,
       		long: -0.09,
-      		zoom: 3,
+      		zoom: 4,
 		}
 	}
 
 	componentDidMount() {		
 
 		setTimeout(function() {
+			
 			// STORE STATE
 			let store_state = store.getState(); 
 			
@@ -46,7 +47,8 @@ class QuakeMap extends Component {
 
 			// ON CHANGE, SET POSITION TO UPDATED POSITION		
 			this.change_location();
-		}.bind(this), 100);
+
+		}.bind(this), 1000);
 
 		
 	}
@@ -69,15 +71,40 @@ class QuakeMap extends Component {
 			this.setState({lat: position[0], long: position[1]});
 		};
 		
+		// ATTACH AN EVENT LISTENER TO THE FEED TABLE ROWS & STORE LAT, LONG
 		for (var i = 0; i < table_bod.length; i++) {
-			table_bod[i].addEventListener('click', function() {	
-				
+
+			var id_arr = [];
+
+			table_bod[i].addEventListener('click', function(event) {		
+						
 				position[0] = parseFloat(this.children[0].attributes[1].value);
 				position[1] = parseFloat(this.children[0].attributes[2].value);
 				
-				set_parent_st();								
-								
-			})
+				set_parent_st();																	
+				
+				// ADD UNIQUE ID
+				event.target.parentNode.setAttribute('data-key', Math.ceil(Math.random() * 100));
+				
+				// ADD ACTIVE CLASS ONLY TO SELECTED ROW
+				var sibling_nodes = this.parentNode.childNodes;
+				
+				if (this.classList.contains('active_li')) {
+					this.classList.remove('active_li');
+				} 
+
+				else {					
+					// SIBLINGS
+					for (var i = 0; i < sibling_nodes.length; i++) {
+						
+						if (sibling_nodes[i].classList.contains('active_li')) {
+							sibling_nodes[i].classList.remove('active_li');
+						}
+						this.classList.add('active_li');
+					}
+				}
+
+			}); // END CLICK HANDLER		
 		}
 	}
 
@@ -85,12 +112,22 @@ class QuakeMap extends Component {
 		let position = [this.state.lat, this.state.long];	
 		return (
 			<div className='section-quake-map p-2'>
-				<Map center={position} zoom={this.state.zoom}>
+				<Map 
+					center={position} 
+					zoom={this.state.zoom}
+					dragging={true}
+				>				
+
 			        <TileLayer
+
 			          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			          url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'				          	
 			        />
-			        <Marker position={position} />
+			        <Marker position={position}>
+			        	<Popup>
+				            Popup for any custom information.
+				        </Popup>
+			        </Marker>
 			     </Map>
 			</div>
 		)				

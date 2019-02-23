@@ -22,8 +22,7 @@ class FeedTable extends Component {
 		}
 	}
 
-	componentDidMount() {
-		// console.log(this.props.fetch_call);
+	componentDidMount() {		
 
 		// DISPATCH QUAKES TO REDUX STORE TO DISPLAY IN MAP
 		store.dispatch({ type: 'MAP-DATA', payload: this.props.fetch_call });
@@ -70,8 +69,7 @@ class FeedTable extends Component {
 
 			// STORE CURRENT TARGET CLICK'S LAT & LONG
 			var click_lat = event.currentTarget.children[1].dataset.lat; 
-			var click_long = event.currentTarget.children[2].dataset.lng; // SEND THESE AS PROPS TO QUAKE MAP
-			console.log(click_lat, click_long);
+			var click_long = event.currentTarget.children[2].dataset.lng; // SEND THESE AS PROPS TO QUAKE MAP			
 			
 			return event.currentTarget;
 		}

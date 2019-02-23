@@ -8,7 +8,7 @@ html, body {
 
 /*UTILITY*/
 .active_li {
-	background-color: #1a1a1a;
+	background-color: #000;
 }
 
 /* - - - GENERAL - - - */
@@ -151,8 +151,9 @@ th {
 	color: #ffffff;
 }
 
-
-
+.leaflet-tile {
+    -webkit-filter: hue-rotate(610deg) invert(100%);
+}
 
 
 

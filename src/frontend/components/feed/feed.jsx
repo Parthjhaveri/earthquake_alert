@@ -67,55 +67,62 @@ class QuakeFeed extends Component {
 			// ----------------- INITIAL FETCH -----------------
 				// USE THE VARIABLES TO PLUG IN YEAR, MONTH, DAY AND INITIATE FETCH CALL
 				fetch ('https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=' + year + '-' + month + '-' + yesterday + 
-					   '&endtime=' + year + '-' + month + '-' + day + '&minmagnitude=5')
+					   '&endtime=' + year + '-' + month + '-' + day + '&minmagnitude=4')
 
 				.then((response) => {
+					// console.log(response);
 					return response.json();
 				})
 
 				.then((json) => {		
+					// console.log(json);
+					let eq_props = json.features;	
 
-					let eq_props = json.features;
+					if (eq_props.length > 0) {
 
-					store.dispatch({ type: 'FETCH-RESPONSE', payload: eq_props })
+						store.dispatch({ type: 'FETCH-RESPONSE', payload: eq_props })
 
-					// EARTHQUAKE DATA FROM FETCH 
-					let fetched_req = store.getState();
-					
-					// SET COMPONENT STATE TO STATE FROM REDUX STORE
-					this.setState({current_quakes: fetched_req});					
-					
-					// LOG CURRENT EARTHQUAKES
-					// console.log('Data', this.state.current_quakes);
-
-					// CURRENT EARTHQUAKES
-					const quakes = [].slice.call(this.state.current_quakes.quake_data);
-					
-					// STORE QUAKES IN OBJECT TO PACKAGE AND PUSH INTO REDUX STORE
-					let quake_table_data = {};					
-					
-					for (var i = 0; i < quakes[0].length; i++) {
-
-						// LOCATION, MAGNITUDE, TIME OF CURRENT EARTHQUAKES
-						const quake_location = quakes[0][i].properties.place;
-						const quake_mag      = quakes[0][i].properties.mag;
-						const quake_time     = new Date(quakes[0][i].properties.time).toLocaleString();
-
-						quake_table_data.loc = quake_location;
-						quake_table_data.mg  = quake_mag;
-						quake_table_data.tim = quake_time;						
+						// EARTHQUAKE DATA FROM FETCH 
+						let fetched_req = store.getState();
 						
-						/* 
-							PUSHES THIS OBJECT TO THE REDUX STORE SO THAT YOU CAN ACCESS IT INSIDE 
-							THE FEED TABLE COMPONENT AND CREATE A DYNAMIC TABLE	
-						*/
-						store.dispatch({ type: 'STORE-QUAKES', payload: quake_table_data });
-					} // END LOOP					
-					
-					// GET PROPS FROM mapStateToProps OF REDUX STATE AND SET STATE					
-					this.setState({ quakes_list: this.props.e_quakes[0]});
-					// console.log('QUAKES LIST COMPONENT STATE ', this.state.quakes_list);
-				})
+						// SET COMPONENT STATE TO STATE FROM REDUX STORE
+						this.setState({current_quakes: fetched_req});					
+						
+						// LOG CURRENT EARTHQUAKES
+						// console.log('Data', this.state.current_quakes);
+
+						// CURRENT EARTHQUAKES
+						const quakes = [].slice.call(this.state.current_quakes.quake_data);
+						
+						// STORE QUAKES IN OBJECT TO PACKAGE AND PUSH INTO REDUX STORE
+						let quake_table_data = {};					
+						
+						for (var i = 0; i < quakes[0].length; i++) {
+
+							// LOCATION, MAGNITUDE, TIME OF CURRENT EARTHQUAKES
+							const quake_location = quakes[0][i].properties.place;
+							const quake_mag      = quakes[0][i].properties.mag;
+							const quake_time     = new Date(quakes[0][i].properties.time).toLocaleString();
+
+							quake_table_data.loc = quake_location;
+							quake_table_data.mg  = quake_mag;
+							quake_table_data.tim = quake_time;						
+							
+							/* 
+								PUSHES THIS OBJECT TO THE REDUX STORE SO THAT YOU CAN ACCESS IT INSIDE 
+								THE FEED TABLE COMPONENT AND CREATE A DYNAMIC TABLE	
+							*/
+							store.dispatch({ type: 'STORE-QUAKES', payload: quake_table_data });
+						} // END LOOP					
+						
+						// GET PROPS FROM mapStateToProps OF REDUX STATE AND SET STATE					
+						this.setState({ quakes_list: this.props.e_quakes[0]});
+						// console.log('QUAKES LIST COMPONENT STATE ', this.state.quakes_list);
+					} else {
+						console.log('API returning empty array');
+						return null;
+					}
+				}) // END THEN
 
 			// -------------------------------------------------
 
