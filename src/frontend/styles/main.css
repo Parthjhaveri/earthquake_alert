@@ -6,11 +6,6 @@ html, body {
 	font-family: 'Share Tech Mono', monospace;
 }
 
-/*UTILITY*/
-.active_li {
-	background-color: #000;
-}
-
 /* - - - GENERAL - - - */
 h1, h2, h3, h4, h5, h6 {
 	font-weight: 700;
@@ -41,9 +36,9 @@ th {
 
 /* - - - UTILITY - - - */
 .quake-feed-table-active-row {
-	background-color: #000000;	
+	background-color: #42f47d;
+	color: #000;	
 }
-
 
 /* - - - NAVBAR - - -*/
 .app-main-nav{
@@ -138,7 +133,8 @@ th {
 /*DYNAMIC TABLE ROWS*/
 .quake-feed-table-body__table-row-dynamic:hover {
 	cursor: pointer;
-	background-color: #000000;
+	background-color: #42f47d;
+	color: #000;
 }
 
 /*QUAKE MAP*/
@@ -152,7 +148,7 @@ th {
 }
 
 .leaflet-tile {
-    -webkit-filter: hue-rotate(610deg) invert(100%);
+    -webkit-filter: hue-rotate(50deg) invert(0%);
 }
 
 

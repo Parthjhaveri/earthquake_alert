@@ -89,18 +89,18 @@ class QuakeMap extends Component {
 				// ADD ACTIVE CLASS ONLY TO SELECTED ROW
 				var sibling_nodes = this.parentNode.childNodes;
 				
-				if (this.classList.contains('active_li')) {
-					this.classList.remove('active_li');
+				if (this.classList.contains('quake-feed-table-active-row')) {
+					this.classList.remove('quake-feed-table-active-row');
 				} 
 
 				else {					
 					// SIBLINGS
 					for (var i = 0; i < sibling_nodes.length; i++) {
 						
-						if (sibling_nodes[i].classList.contains('active_li')) {
-							sibling_nodes[i].classList.remove('active_li');
+						if (sibling_nodes[i].classList.contains('quake-feed-table-active-row')) {
+							sibling_nodes[i].classList.remove('quake-feed-table-active-row');
 						}
-						this.classList.add('active_li');
+						this.classList.add('quake-feed-table-active-row');
 					}
 				}
 
