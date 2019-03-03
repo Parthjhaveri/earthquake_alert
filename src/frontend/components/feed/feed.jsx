@@ -57,17 +57,17 @@ class QuakeFeed extends Component {
 		: null;
 
 		// TODAY USING MODIFIED YEAR, MONTH, DATE
-		const today = [year, month, day]
-		let yesterday = day - 1;		
-		yesterday.toString();
+		const today = [year, month, day];
+		let past_date = day - 2;		
+		past_date.toString();
 
 		// FETCH CALL TO GET DATA (ARROW FUNCTION TO BIND TO PARENT SCOPE)
 		const repeat_fetch = () => {
 
 			// ----------------- INITIAL FETCH -----------------
 				// USE THE VARIABLES TO PLUG IN YEAR, MONTH, DAY AND INITIATE FETCH CALL
-				fetch ('https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=' + year + '-' + month + '-' + yesterday + 
-					   '&endtime=' + year + '-' + month + '-' + day + '&minmagnitude=4')
+				fetch ('https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=' + year + '-' + month + '-' + past_date + 
+					   '&endtime=' + year + '-' + month + '-' + day + '&minmagnitude=3')
 
 				.then((response) => {
 					// console.log(response);
@@ -128,8 +128,8 @@ class QuakeFeed extends Component {
 
 			setTimeout(function() {
 				// USE THE VARIABLES TO PLUG IN YEAR, MONTH, DAY AND INITIATE FETCH CALL
-				fetch ('https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=' + year + '-' + month + '-' + yesterday + 
-					   '&endtime=' + year + '-' + month + '-' + day + '&minmagnitude=5')
+				fetch ('https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=' + year + '-' + month + '-' + past_date + 
+					   '&endtime=' + year + '-' + month + '-' + day + '&minmagnitude=3')
 
 				.then((response) => {
 					return response.json();

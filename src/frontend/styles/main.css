@@ -36,8 +36,12 @@ th {
 
 /* - - - UTILITY - - - */
 .quake-feed-table-active-row {
-	background-color: #42f47d;
-	color: #000;	
+	border-left: 3px solid #42f47d;
+	color: #42f47d;	
+}
+
+.txt-white {
+	color: #fff;
 }
 
 /* - - - NAVBAR - - -*/
@@ -133,8 +137,8 @@ th {
 /*DYNAMIC TABLE ROWS*/
 .quake-feed-table-body__table-row-dynamic:hover {
 	cursor: pointer;
-	background-color: #42f47d;
-	color: #000;
+	border-left: 3px solid #42f47d;
+	box-sizing: border-box;
 }
 
 /*QUAKE MAP*/
@@ -151,5 +155,12 @@ th {
     -webkit-filter: hue-rotate(50deg) invert(0%);
 }
 
+/*GRAPH STYLES*/
+.section-main-graph {
+	width: 100%;
+	height: 400px;
+	background-color: #000;
+	margin-left: -7px;
+}
 
 

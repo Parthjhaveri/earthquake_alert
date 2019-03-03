@@ -11,6 +11,7 @@ import TimeNow from './frontend/components/time-now/time_now.jsx';
 import QuakeFeed from './frontend/components/feed/feed.jsx';
 import change_pin from './frontend/components/feed/feed-table.jsx';
 import QuakeMap from './frontend/components/map/quake_map.jsx';
+import Graphmain from './frontend/components/graph/graph-main.jsx';
 
 // REDUX IMPORTS
 import store from './redux-config/store/store.js';
@@ -52,7 +53,7 @@ class Index extends Component {
 				  </div>
 				  
 				  <div className="col-md-7 app-main-wrapper__heading mt-2 px-2">
-				  	<p>All Earthquakes below in past 24 hours</p>
+				  	<p>Dating back to past 2 days - above Mag 3</p>
 				  </div>
 
 				</div>
@@ -68,6 +69,9 @@ class Index extends Component {
 				  </div>
 
 				</div>
+
+				<Graphmain />
+
   			</div>
   		</div>
   	)
