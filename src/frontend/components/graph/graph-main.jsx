@@ -10,10 +10,7 @@ import showCurrentTime from '../../../redux-config/actions/actions.js';
 
 // COMPONENT IMPORTS
 import FeedTable from '../feed/feed-table.jsx';
-
-// D3
-// var rd3 = require('react-d3');
-// var LineChart = rd3.LineChart;
+import Linechart from './line-chart.jsx';
 
 class Graphmain extends React.Component {
 	constructor(props) {
@@ -26,11 +23,11 @@ class Graphmain extends React.Component {
 		return (
 			<div className='section-main-graph'>
 				<div className='row'>
-					<div className='col-md-3 txt-white'>
+					<div className='col-md-5 txt-white section-main-graph__dash-board'>
 						...
 					</div>
-					<div className='col-md-9 txt-white'>
-						...
+					<div className='col-md-7 txt-white'>
+						<Linechart />
 					</div>
 				</div>
 			</div>
@@ -39,3 +36,8 @@ class Graphmain extends React.Component {
 }
 
 export default Graphmain;
+
+
+
+
+
