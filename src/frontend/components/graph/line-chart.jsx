@@ -33,26 +33,34 @@ class Linechart extends React.Component {
 				quake.properties.mag >= 3 && quake.properties.mag < 4
 			);
 
-			// NEW OBJECT
-			var mag_three_obj = new Object();
-			
-			for (var i = 0; i < mag_three.length; i++) {
-
-				// GET DATE AND TIME OF EACH MAG 3 EARTHQUAKE
-				const time_stamp  = new Date(mag_three[i].properties.time);
-				const string_time = time_stamp.toString();
-				const mag_three_time  = new Date(string_time.split(' ').slice(1, 5)).toLocaleString();
+			const mag_three_parse = () => {
+				// NEW OBJECT
+				var mag_three_obj = new Object();
+				const quake_arr = []; // STORE QUAKES OBJECTS
 				
-				// DAY/TIME
-				const quake_three_time = mag_three_time.split(' ');
+				for (var i = 0; i < mag_three.length; i++) {
 
-				// MAGNITUDE
-				const quake_three_mag = mag_three[i].properties.mag;
+					// GET DATE AND TIME OF EACH MAG 3 EARTHQUAKE
+					const time_stamp  = new Date(mag_three[i].properties.time);
+					const string_time = time_stamp.toString();
+					const mag_three_time  = new Date(string_time.split(' ').slice(1, 5)).toLocaleString();
+					
+					// DAY/TIME
+					const quake_three_time = mag_three_time.split(' ');
 
-				console.log(quake_three_mag, quake_three_time);
+					// MAGNITUDE
+					const quake_three_mag = mag_three[i].properties.mag;				
+
+					mag_three_obj = {
+						emag:  quake_three_mag,
+						etime: quake_three_time
+					}
+					
+					quake_arr.push(mag_three_obj);
+				} // END LOOP 
+				console.log(quake_arr);
 			}
-			
-			
+			mag_three_parse();
 
 		}, 1000);
 	}
