@@ -12,8 +12,8 @@ import showCurrentTime from '../../../redux-config/actions/actions.js';
 import FeedTable from '../feed/feed-table.jsx';
 
 // IMPORT D3
-import ReactD3 from 'd3';
-import { LineChart, Brush, d3 } from 'react-d3-components';
+import rd3 from 'react-d3-library';
+<script src="https://d3js.org/d3.v4.min.js"></script>
 
 class Linechart extends React.Component {
 	constructor(props) {
@@ -23,30 +23,20 @@ class Linechart extends React.Component {
 	}
 
 	componentDidMount() {
+		setTimeout(function() {
 
+			// EARTHQUAKES FROM FETCH FROM FEED.JSX
+			var parsed_quakes = (store.getState()).quake_data[0];
+			console.log(parsed_quakes);
+
+		}, 1000);
 	}
 
-	render() {
-		var lineData = [
-		  {
-		    name: "series1",
-		    values: [ { x: 0, y: 20 }, { x: 24, y: 10 } ]
-		  },
-		  
-		  {
-		    name: "series2",
-		    values: [ { x: 70, y: 82 }, { x: 76, y: 82 } ]
-		  }
-		];
+	render() {		
 		return (
-			<div>
-				<LineChart
-				  legend={true}
-				  data={lineData}
-				  width={500}
-				  height={300}
-				  title="Line Chart"
-				/>
+			<div className='line-graph'>
+				<svg>
+				</svg>
 			</div>
 		)
 	}

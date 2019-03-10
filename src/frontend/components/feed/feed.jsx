@@ -75,8 +75,10 @@ class QuakeFeed extends Component {
 				})
 
 				.then((json) => {		
-					// console.log(json);
+					// console.log(json.features);
 					let eq_props = json.features;	
+
+					store.dispatch({type: 'FETCH-RESPONSE', payload: eq_props });
 
 					if (eq_props.length > 0) {
 
