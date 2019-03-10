@@ -27,7 +27,32 @@ class Linechart extends React.Component {
 
 			// EARTHQUAKES FROM FETCH FROM FEED.JSX
 			var parsed_quakes = (store.getState()).quake_data[0];
-			console.log(parsed_quakes);
+			
+			// MAGNITUDE 3 QUAKES
+			const mag_three = parsed_quakes.filter(quake => 
+				quake.properties.mag >= 3 && quake.properties.mag < 4
+			);
+
+			// NEW OBJECT
+			var mag_three_obj = new Object();
+			
+			for (var i = 0; i < mag_three.length; i++) {
+
+				// GET DATE AND TIME OF EACH MAG 3 EARTHQUAKE
+				const time_stamp  = new Date(mag_three[i].properties.time);
+				const string_time = time_stamp.toString();
+				const mag_three_time  = new Date(string_time.split(' ').slice(1, 5)).toLocaleString();
+				
+				// DAY/TIME
+				const quake_three_time = mag_three_time.split(' ');
+
+				// MAGNITUDE
+				const quake_three_mag = mag_three[i].properties.mag;
+
+				console.log(quake_three_mag, quake_three_time);
+			}
+			
+			
 
 		}, 1000);
 	}

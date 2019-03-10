@@ -24,10 +24,10 @@ class Graphmain extends React.Component {
 			<div className='section-main-graph'>
 				<div className='row'>
 					<div className='col-md-5 txt-white section-main-graph__dash-board'>
-						...
+						<Linechart />
 					</div>
 					<div className='col-md-7 txt-white'>
-						<Linechart />
+						...
 					</div>
 				</div>
 			</div>
