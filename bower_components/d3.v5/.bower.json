@@ -1,0 +1,14 @@
+{
+  "name": "d3.v5",
+  "_cacheHeaders": {
+    "ETag": "W/\"5c9170bb-7bc2d\"",
+    "Last-Modified": "Tue, 19 Mar 2019 22:44:11 GMT",
+    "Content-Type": "application/javascript; charset=utf-8"
+  },
+  "_release": "e-tag:W/\"5c9170b",
+  "main": "index.js",
+  "_source": "https://d3js.org/d3.v5.js",
+  "_target": "*",
+  "_originalSource": "https://d3js.org/d3.v5.js",
+  "_direct": true
+}

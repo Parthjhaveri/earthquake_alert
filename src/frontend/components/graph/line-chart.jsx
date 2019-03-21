@@ -11,17 +11,13 @@ import showCurrentTime from '../../../redux-config/actions/actions.js';
 // COMPONENT IMPORTS
 import FeedTable from '../feed/feed-table.jsx';
 
-// IMPORT D3
-import rd3 from 'react-d3-library';
-<script src="https://d3js.org/d3.v4.min.js"></script>
-
 class Linechart extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.draw_chart = this.draw_chart.bind(this);
 
-		this.state = {}
+		this.state = {}		
 	}
 
 	componentDidMount() {
@@ -66,18 +62,18 @@ class Linechart extends React.Component {
 			
 			// PARSED MAGNITUDE THREE INVOCATION
 			const parsed_mag_three = mag_parse(mag_three);		
-			// this.draw_chart(parsed_mag_three);
+			this.draw_chart(parsed_mag_three);
 
 		}, 1000);
 	}
 
 	draw_chart(data) {
 		// SVG CONSTRUCTOR
-		let svg_width = 600;
-		let svg_height = 500;
-		let margin = { top: 20, right: 20, bottom: 30, left: 50 };
-		let width = svg_width - margin.left - margin.right;
-		let height = svg_height - margin.top - margin.bottom;
+		var svg_width = 600;
+		var svg_height = 400;
+		var margin = { top: 20, right: 20, bottom: 30, left: 50 };
+		var width = svg_width - margin.left - margin.right;
+		var height = svg_height - margin.top - margin.bottom;
 
 		// SET SVG WIDTH, HEIGHT
 		var svg = d3.select('svg')
@@ -87,10 +83,35 @@ class Linechart extends React.Component {
 		// CREATE GROUP, THEN APPEND
 		var g = svg.append('g')
 			.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-		
+		console.log(d3);
 		// CREATE SCALES
 		var x = d3.scaleTime().rangeRound([0, width]);
-		var y = d3.scaleTime().rangeRound([height, 0]);
+		var y = d3.scaleLinear().rangeRound([height, 0]);
+
+		// CREATE LINES
+		var line = d3.line()
+			.x(function(d) {return x(d.etime)})
+			.y(function(d) {return y(d.emag)})
+
+			x.domain(d3.extent(data, function(d) {return d.etime}));
+			y.domain(d3.extent(data, function(d) {return d.emag}));
+
+		// APPEND AXISES
+		g.append('g')
+			.attr('transform', 'translate (0,' + height + ')')
+			.call(d3.axisBottom(x))
+			.select('.domain')
+			.remove();
+
+		g.append('g')
+		    .call(d3.axisLeft(y))
+		    .append("text")
+		    .attr("fill", "#fff")
+		    .attr("transform", "rotate(-90)")
+		    .attr("y", 6)
+		    .attr("dy", "0.71em")
+		    .attr("text-anchor", "end")
+		    .text("Magnitude");
 	}
 
 	render() {		
