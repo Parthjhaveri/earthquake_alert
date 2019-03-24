@@ -159,7 +159,7 @@ th {
 .section-main-graph {
 	width: 100%;
 	height: auto;
-	background-color: #000;
+	background-color: transparent;
 	margin-left: -7px;
 	padding: 20px;
 	box-sizing: border-box;
@@ -169,6 +169,11 @@ th {
 	border: 1px dotted red;	
 }
 
+.line {
+  fill: none;
+  stroke: orangered;
+  stroke-width: 1px;
+}
 
 
 

@@ -15,7 +15,7 @@ class Linechart extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.draw_chart = this.draw_chart.bind(this);
+		// this.draw_chart = this.draw_chart.bind(this);
 
 		this.state = {}		
 	}
@@ -56,69 +56,71 @@ class Linechart extends React.Component {
 					}
 					
 					quake_arr.push(mag_three_obj);
+
+
 				} // END LOOP 
-				console.log(quake_arr);
-			} // END FUNCTION
+				
+				console.log('QUAKE ARR ', quake_arr);
+
+				// DISPATCH TO USE IN draw_chart FUNCTION
+				store.dispatch({ type: 'PARSED-QUAKES', payload: quake_arr });
+				
+
+			} // END MAG PARSE FUNCTION
 			
 			// PARSED MAGNITUDE THREE INVOCATION
-			const parsed_mag_three = mag_parse(mag_three);		
+			const parsed_mag_three = mag_parse(mag_three);			
+				
 			this.draw_chart(parsed_mag_three);
 
-		}, 1000);
+
+
+		}, 1000);			
 	}
 
 	draw_chart(data) {
-		// SVG CONSTRUCTOR
-		var svg_width = 600;
-		var svg_height = 400;
-		var margin = { top: 20, right: 20, bottom: 30, left: 50 };
-		var width = svg_width - margin.left - margin.right;
-		var height = svg_height - margin.top - margin.bottom;
 
-		// SET SVG WIDTH, HEIGHT
-		var svg = d3.select('svg')
-			.attr('width', svg_width)
-			.attr('height', svg_height);
+		// DECLARE MARGIN AND DIMENSIONS
+		var margin = {
+			top: 20,
+			right: 20,
+			bottom: 30,
+			left: 50
+		}
 
-		// CREATE GROUP, THEN APPEND
-		var g = svg.append('g')
-			.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-		console.log(d3);
-		// CREATE SCALES
-		var x = d3.scaleTime().rangeRound([0, width]);
-		var y = d3.scaleLinear().rangeRound([height, 0]);
+		var width  = 600 - margin.left - margin.right;
+		var height = 500 - margin.top - margin.bottom;
 
-		// CREATE LINES
-		var line = d3.line()
-			.x(function(d) {return x(d.etime)})
-			.y(function(d) {return y(d.emag)})
+		// PARSE DATE
+		var parsed_date = d3.timeParse('%d-%b-%y');
 
-			x.domain(d3.extent(data, function(d) {return d.etime}));
-			y.domain(d3.extent(data, function(d) {return d.emag}));
+		// SET THE RANGES
+		var x = d3.scaleTime().range([0, width]);
+		var y = d3.scaleLinear().range([height, 0]);
 
-		// APPEND AXISES
-		g.append('g')
-			.attr('transform', 'translate (0,' + height + ')')
-			.call(d3.axisBottom(x))
-			.select('.domain')
-			.remove();
+		// DEFINE THE LINE
+		var value_line = d3.line()
+			.x(function(d) {return d.etime})
+			.y(function(d) {return d.emag})
 
-		g.append('g')
-		    .call(d3.axisLeft(y))
-		    .append("text")
-		    .attr("fill", "#fff")
-		    .attr("transform", "rotate(-90)")
-		    .attr("y", 6)
-		    .attr("dy", "0.71em")
-		    .attr("text-anchor", "end")
-		    .text("Magnitude");
+		// APPEND THE SVG OJECT TO THE BODY OF THE PAGE
+		// APPEND A GROUP ELEMENT AND MOVE IT TO TOP LEFT 
+		var svg = d3.select('.line-graph').append('svg')
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		
+			// GET PARSED EARTHQUAKES FROM REDUX STORE
+			let parsed_quakes__redux = store.getState();
+			var parsed_quakes = parsed_quakes__redux.quake_data[0];
+			console.log(parsed_quakes);
 	}
 
 	render() {		
 		return (
 			<div className='line-graph'>
-				<svg>
-				</svg>
+				
 			</div>
 		)
 	}

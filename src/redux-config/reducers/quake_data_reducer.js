@@ -9,6 +9,9 @@ const quake_data_reducer = (state=[], action) => {
 		case 'FETCH-RESPONSE':
 			return [action.payload]
 
+		case 'PARSED-QUAKES':
+			return [action.payload]
+
 		case 'MAP-DATA':
 			return [action.payload]
 
