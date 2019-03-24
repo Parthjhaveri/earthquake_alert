@@ -64,28 +64,26 @@ class Linechart extends React.Component {
 
 				// DISPATCH TO USE IN draw_chart FUNCTION
 				store.dispatch({ type: 'PARSED-QUAKES', payload: quake_arr });
-				
+				return quake_arr;
 
 			} // END MAG PARSE FUNCTION
 			
 			// PARSED MAGNITUDE THREE INVOCATION
-			const parsed_mag_three = mag_parse(mag_three);			
-				
+			const parsed_mag_three = mag_parse(mag_three);		
+			
 			this.draw_chart(parsed_mag_three);
-
-
 
 		}, 1000);			
 	}
 
 	draw_chart(data) {
-
+		console.log('DATA', data);
 		// DECLARE MARGIN AND DIMENSIONS
 		var margin = {
 			top: 20,
 			right: 20,
 			bottom: 30,
-			left: 50
+			left: 100
 		}
 
 		var width  = 700 - margin.left - margin.right;
@@ -96,12 +94,12 @@ class Linechart extends React.Component {
 
 		// SET THE RANGES
 		var x = d3.scaleTime().range([0, width]);
-		var y = d3.scaleLinear().range([height, 0]);
+		var y = d3.scaleLinear().range([height, 3]);
 
 		// DEFINE THE LINE
-		var value_line = d3.line()
-			.x(function(d) {return d.etime})
-			.y(function(d) {return d.emag})
+		var valueLine = d3.line()
+			// .x(function(d) {return x(d.etime);})
+			.y(function(d) {return y(d.emag);})
 
 		// APPEND THE SVG OJECT TO THE BODY OF THE PAGE
 		// APPEND A GROUP ELEMENT AND MOVE IT TO TOP LEFT 
@@ -112,26 +110,26 @@ class Linechart extends React.Component {
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 		
 			// GET PARSED EARTHQUAKES FROM REDUX STORE
-			let parsed_quakes__redux = store.getState();
-			var parsed_quakes = parsed_quakes__redux.quake_data[0];
+			let parsed_quakes = (store.getState()).quake_data[0];			
 			
 			parsed_quakes.forEach((data) => {				
-				data.etime = data.etime.join(' ');
+				data.etime = data.etime;
 				data.emag = +data.emag;
 				console.log(data.etime, data.emag);
-				x.domain(d3.extent(data, function(d) { return d.etime }));
-				y.domain([0, d3.max(data, function(d) { return d.emag })]);
+				// x.domain(d3.extent(data, function(d) { return d.etime }));
 			});
-
+			
+				y.domain([3, d3.max(data, function(d) { return d.emag })]);
+			
 			svg.append('path')
 				.data([data])
 				.attr('class', 'line')
-				// .attr('d', value_line)
+				// .attr('d', valueLine)
 
-			// APPEND X AXIS
-			svg.append('g')
-				.attr('transform', 'translate(0,' + height + ')')
-				.call(d3.axisBottom(x));
+			// // APPEND X AXIS
+			// svg.append('g')
+			// 	.attr('transform', 'translate(0,' + height + ')')
+			// 	.call(d3.axisBottom(x));
 
 			// APPEND THE Y AXIS
 			svg.append('g')
