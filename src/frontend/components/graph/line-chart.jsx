@@ -15,7 +15,7 @@ class Linechart extends React.Component {
 	constructor(props) {
 		super(props);
 
-		// this.draw_chart = this.draw_chart.bind(this);
+		this.draw_chart = this.draw_chart.bind(this);
 
 		this.state = {}		
 	}
@@ -114,7 +114,29 @@ class Linechart extends React.Component {
 			// GET PARSED EARTHQUAKES FROM REDUX STORE
 			let parsed_quakes__redux = store.getState();
 			var parsed_quakes = parsed_quakes__redux.quake_data[0];
-			console.log(parsed_quakes);
+			
+			parsed_quakes.forEach((data) => {				
+				data.etime = data.etime.join(' ');
+				data.emag = +data.emag;
+				console.log(data.etime, data.emag);
+				x.domain(d3.extent(data, function(d) { return d.etime }));
+				y.domain([0, d3.max(data, function(d) { return d.emag })]);
+			});
+
+			svg.append('path')
+				.data([data])
+				.attr('class', 'line')
+				.attr('d', value_line)
+
+			// APPEND X AXIS
+			svg.append('g')
+				.attr('transform', 'translate(0,' + height + ')')
+				.call(d3.axisBottom(x));
+
+			// APPEND THE Y AXIS
+			svg.append('g')
+				.call(d3.axisLeft(y));
+
 	}
 
 	render() {		
