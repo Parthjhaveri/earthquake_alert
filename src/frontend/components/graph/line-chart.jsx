@@ -88,7 +88,7 @@ class Linechart extends React.Component {
 			left: 50
 		}
 
-		var width  = 600 - margin.left - margin.right;
+		var width  = 700 - margin.left - margin.right;
 		var height = 500 - margin.top - margin.bottom;
 
 		// PARSE DATE
@@ -126,7 +126,7 @@ class Linechart extends React.Component {
 			svg.append('path')
 				.data([data])
 				.attr('class', 'line')
-				.attr('d', value_line)
+				// .attr('d', value_line)
 
 			// APPEND X AXIS
 			svg.append('g')
