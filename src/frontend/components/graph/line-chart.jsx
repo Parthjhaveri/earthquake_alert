@@ -84,22 +84,19 @@ class Linechart extends React.Component {
 		}, 1000);			
 	}
 
+	// LINE CHART FUNCTION
 	draw_chart(data) {
 
 		// DECLARE MARGIN AND DIMENSIONS
 		var margin = {
 			top: 20,
 			right: 20,
-			bottom: 30,
-			left: 40
+			bottom: 80,
+			left: 80
 		}
 
-		var width  = 1000 - margin.left - margin.right;
+		var width  = 1100 - margin.left - margin.right;
 		var height = 500 - margin.top - margin.bottom;
-
-		// SET THE RANGES
-		var x = d3.scaleTime().range([0, width]);
-		var y = d3.scaleLinear().range([height, 3]);
 
 		// APPEND THE SVG OJECT TO THE BODY OF THE PAGE
 		// APPEND A GROUP ELEMENT AND MOVE IT TO TOP LEFT 
@@ -118,11 +115,13 @@ class Linechart extends React.Component {
 			});
 
 			// DEFINE THE LINE
-			var value_line = d3.line()			
+			var value_line = d3.line()
 				.x(function(d) {return x(d.etime);})
 				.y(function(d) {return y(d.emag);})
-						
-			// console.log('DATA!', data);
+			
+			// SET THE RANGES
+			var x = d3.scaleTime().range([0, width]);
+			var y = d3.scaleLinear().range([height, 3]);
 			
 			// CONVERT DATES BACK TO MILLISECONDS
 			data.forEach(function(el) {
@@ -130,21 +129,24 @@ class Linechart extends React.Component {
 				var millis_format = date_format.getTime();
 				
 				// CONVERT THE STRING DATE/TIME FORMAT TO MILLISECONDS
-				el.etime = millis_format;
-				console.log(el);
+				el.etime = millis_format;				
 			})			
 
+			console.log('DATA ARRAY 1ST EL ', data[0]);
+			console.log('DATA ARRAY LAST EL ', data[data.length - 1]);
+
+			// SET THE DOMAINS
 			// CREATE VALUES FOR THE X AXIS FROM MIN TO MAX	
 			x.domain(
-				d3.extent(data, function(d) { 
-					console.log('DTIME ', new Date(d.etime));
-					return d.etime; 
+				d3.extent(data, function(d) { 					
+					console.log('DTIME ', d.etime);
+					return new Date(d.etime); 
 				})
-			);
+			);				
 
 			// CREATE VALUES FOR THE Y AXIS FROM MIN TO MAX	
 			y.domain([3, d3.max(data, function(d) { return d.emag })]);
-			
+
 			svg.append('path')
 				.data([data])
 				.attr('class', 'line')
@@ -152,8 +154,16 @@ class Linechart extends React.Component {
 
 			// APPEND X AXIS
 			svg.append('g')
+				.call(d3.axisBottom(x))
 				.attr('transform', 'translate(0,' + height + ')')
-				.call(d3.axisBottom(x));
+				.append('text')
+				.attr('fill', '#ffc107')				
+				.attr('x', 6)
+				.attr('dx', '1.5em')
+				.attr('dy', '2.5em')
+				.attr('text-anchor', 'end')
+				.attr("font-size", 16)
+				.text('Time');
 
 			// APPEND THE Y AXIS
 			svg.append('g')				
@@ -161,9 +171,10 @@ class Linechart extends React.Component {
 				.append("text")
 			    .attr("fill", "#ffc107")
 			    .attr("transform", "rotate(-90)")
-			    .attr("y", 6)
-			    .attr("dy", "1.5em")
+			    .attr("y", 0)
+			    .attr("dy", "-2.5em")
 			    .attr("text-anchor", "end")
+			    .attr("font-size", 16)
 			    .text("Magnitude");
 
 	}

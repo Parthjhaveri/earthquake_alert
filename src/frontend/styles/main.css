@@ -166,12 +166,12 @@ th {
 }
 
 .line-graph {
-	
+	text-align: center;
 }
 
 .line {
   fill: none;
-  stroke: orangered;
+  stroke: #42f47d;
   stroke-width: 1px;
 }
 

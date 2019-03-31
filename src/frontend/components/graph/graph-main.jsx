@@ -21,14 +21,9 @@ class Graphmain extends React.Component {
 
 	render() {
 		return (
-			<div className='section-main-graph'>
-				<div className='row'>
-					<div className='col-md-9 txt-white section-main-graph__dash-board'>
-						<Linechart />
-					</div>
-					<div className='col-md-3 txt-white'>
-						...
-					</div>
+			<div className='section-main-graph'>				
+				<div className='txt-white section-main-graph__dash-board'>
+					<Linechart />
 				</div>
 			</div>
 		)
