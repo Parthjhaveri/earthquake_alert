@@ -36,6 +36,8 @@ class Linechart extends React.Component {
 				// NEW OBJECT
 				var mag_three_obj = new Object();
 				const quake_arr = []; // STORE QUAKES OBJECTS
+
+				var line_points = [];
 				
 				for (var i = 0; i < quakemag.length; i++) {
 
@@ -54,13 +56,19 @@ class Linechart extends React.Component {
 						emag:  quake_three_mag,
 						etime: quake_three_time
 					}
+
+					var date_format  = new Date(mag_three_time);
+					var milli_format = date_format.getTime();
+					
+					line_points.push([quake_three_mag, milli_format]);
 					
 					quake_arr.push(mag_three_obj);
 
 
 				} // END LOOP 
 				
-				console.log('QUAKE ARR ', quake_arr);
+				// console.log('QUAKE ARR ', quake_arr);
+				// console.log('LINE POINTS ', line_points);
 
 				// DISPATCH TO USE IN draw_chart FUNCTION
 				store.dispatch({ type: 'PARSED-QUAKES', payload: quake_arr });
@@ -77,29 +85,21 @@ class Linechart extends React.Component {
 	}
 
 	draw_chart(data) {
-		console.log('DATA', data);
+
 		// DECLARE MARGIN AND DIMENSIONS
 		var margin = {
 			top: 20,
 			right: 20,
 			bottom: 30,
-			left: 100
+			left: 40
 		}
 
-		var width  = 700 - margin.left - margin.right;
+		var width  = 1000 - margin.left - margin.right;
 		var height = 500 - margin.top - margin.bottom;
-
-		// PARSE DATE
-		var parsed_date = d3.timeParse('%d-%b-%y');
 
 		// SET THE RANGES
 		var x = d3.scaleTime().range([0, width]);
 		var y = d3.scaleLinear().range([height, 3]);
-
-		// DEFINE THE LINE
-		var valueLine = d3.line()
-			// .x(function(d) {return x(d.etime);})
-			.y(function(d) {return y(d.emag);})
 
 		// APPEND THE SVG OJECT TO THE BODY OF THE PAGE
 		// APPEND A GROUP ELEMENT AND MOVE IT TO TOP LEFT 
@@ -110,30 +110,61 @@ class Linechart extends React.Component {
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 		
 			// GET PARSED EARTHQUAKES FROM REDUX STORE
-			let parsed_quakes = (store.getState()).quake_data[0];			
-			
+			let parsed_quakes = (store.getState()).quake_data[0];						
+
 			parsed_quakes.forEach((data) => {				
-				data.etime = data.etime;
-				data.emag = +data.emag;
-				console.log(data.etime, data.emag);
-				// x.domain(d3.extent(data, function(d) { return d.etime }));
+				data.etime = data.etime.join(' ');
+				data.emag  = data.emag;
 			});
+
+			// DEFINE THE LINE
+			var value_line = d3.line()			
+				.x(function(d) {return x(d.etime);})
+				.y(function(d) {return y(d.emag);})
+						
+			// console.log('DATA!', data);
 			
-				y.domain([3, d3.max(data, function(d) { return d.emag })]);
+			// CONVERT DATES BACK TO MILLISECONDS
+			data.forEach(function(el) {
+				var date_format  = new Date(el.etime);
+				var millis_format = date_format.getTime();
+				
+				// CONVERT THE STRING DATE/TIME FORMAT TO MILLISECONDS
+				el.etime = millis_format;
+				console.log(el);
+			})			
+
+			// CREATE VALUES FOR THE X AXIS FROM MIN TO MAX	
+			x.domain(
+				d3.extent(data, function(d) { 
+					console.log('DTIME ', new Date(d.etime));
+					return d.etime; 
+				})
+			);
+
+			// CREATE VALUES FOR THE Y AXIS FROM MIN TO MAX	
+			y.domain([3, d3.max(data, function(d) { return d.emag })]);
 			
 			svg.append('path')
 				.data([data])
 				.attr('class', 'line')
-				// .attr('d', valueLine)
+				.attr('d', value_line)
 
-			// // APPEND X AXIS
-			// svg.append('g')
-			// 	.attr('transform', 'translate(0,' + height + ')')
-			// 	.call(d3.axisBottom(x));
+			// APPEND X AXIS
+			svg.append('g')
+				.attr('transform', 'translate(0,' + height + ')')
+				.call(d3.axisBottom(x));
 
 			// APPEND THE Y AXIS
-			svg.append('g')
-				.call(d3.axisLeft(y));
+			svg.append('g')				
+				.call(d3.axisLeft(y))
+				.append("text")
+			    .attr("fill", "#ffc107")
+			    .attr("transform", "rotate(-90)")
+			    .attr("y", 6)
+			    .attr("dy", "1.5em")
+			    .attr("text-anchor", "end")
+			    .text("Magnitude");
 
 	}
 
