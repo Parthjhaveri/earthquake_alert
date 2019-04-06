@@ -179,7 +179,7 @@ th {
 }
 
 .leaflet-tile {
-    /*-webkit-filter: hue-rotate(80deg) invert(100%);*/
+    -webkit-filter: hue-rotate(290deg) invert(140%);
 }
 
 /*GRAPH STYLES*/
