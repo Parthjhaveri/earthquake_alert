@@ -1,9 +1,9 @@
 html, body {
-	background-color: #222;
+	background-image: linear-gradient(to right, #3F2543, #000);
 	overflow-x: hidden;
 	margin: 0;
 	padding: 0;
-	font-family: 'Share Tech Mono', monospace;
+	font-family: 'Barlow Condensed', sans-serif;
 }
 
 /* - - - GENERAL - - - */
@@ -11,6 +11,11 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: 700;
 	margin: 0;	
 	padding: 0;
+	letter-spacing: 2px;
+}
+
+p {
+	letter-spacing: 2px;
 }
 
 input:focus, button:focus {
@@ -23,6 +28,8 @@ table {
 
 table, tr, th, td {
 	text-align: left;
+	letter-spacing: 2px;
+	font-weight: 100;
 }
 
 th, td {
@@ -31,13 +38,13 @@ th, td {
 }
 
 th {
-	background-color: #666;
+	background-color: #000;
 }
 
 /* - - - UTILITY - - - */
 .quake-feed-table-active-row {
-	border-left: 3px solid #42f47d;
-	color: #42f47d;	
+	border-left: 3px solid #E1ECA5;
+	color: #E1ECA5;	
 }
 
 .txt-white {
@@ -48,20 +55,26 @@ th {
 .app-main-nav{
 	width: auto;
 	height: auto;
-	background-color: #ffc107;
+	background-color: #641564;
+	/*border-bottom: 1px solid #E1ECA5;*/
+	margin-bottom: 20px;
+	box-shadow: 0px 0px 65px #000;
 }
 
 .app-main-nav h3 {
 	margin: 0;
 	padding: 0;
 	text-transform: uppercase;
+	color: #DDBDEA;
+	font-weight: 100;
+	letter-spacing: 2px;
 }
 
 /* - - - TIME NOW SECTION - - - */
 .section-time-now {
 	width: 100%;
 	height: auto;
-	background-color: #563d7c;
+	background-color: #14171E;
 	color: #fff;
 	font-size: 18px;
 	padding: 10px;
@@ -90,7 +103,7 @@ th {
 .app-main-wrapper__heading {
 	width: 100%;
 	height: auto;
-	background-color: #563d7c;
+	background-color: #14171E;
 	color: #eee;
 	font-size: 18px;	
 	text-align: center;
@@ -108,14 +121,28 @@ th {
 .section-quake-feed {
 	width: 100%;
 	height: 400px;
-	background-color: transparent;
-	border: 5px solid #563d7c;
+	background-color: #14171E;
 	color: #ffffff;
 	font-size: 18px;	
 	text-align: center;
 	box-sizing: border-box;	
 	overflow-y: scroll;
 	font-weight: 100;
+	padding: 20px;
+	border-radius: 5px; 
+}
+
+.section-quake-feed::-webkit-scrollbar {
+	width: 9px;	
+}
+
+.section-quake-feed::-webkit-scrollbar-track {
+	background-color: #222;
+}
+
+.section-quake-feed::-webkit-scrollbar-thumb {
+	background-color: #000;
+	border-radius: 4px;
 }
 
 /*FEED TABLE STYLES*/
@@ -137,7 +164,7 @@ th {
 /*DYNAMIC TABLE ROWS*/
 .quake-feed-table-body__table-row-dynamic:hover {
 	cursor: pointer;
-	border-left: 3px solid #42f47d;
+	border-left: 3px solid #E1ECA5;
 	box-sizing: border-box;
 }
 
@@ -152,7 +179,7 @@ th {
 }
 
 .leaflet-tile {
-    -webkit-filter: hue-rotate(50deg) invert(0%);
+    /*-webkit-filter: hue-rotate(80deg) invert(100%);*/
 }
 
 /*GRAPH STYLES*/
@@ -166,12 +193,12 @@ th {
 }
 
 .line-graph {
-	text-align: center;
+	text-align: left;
 }
 
 .line {
   fill: none;
-  stroke: #42f47d;
+  stroke: #6790FC;
   stroke-width: 1px;
 }
 
