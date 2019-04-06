@@ -48,11 +48,11 @@ class Index extends Component {
 		
   				<div className="row">
 				  
-				  <div className="col-md-5 app-main-wrapper__time-now mt-2 px-2">
+				  <div className="col-md-5 app-main-wrapper__time-now mt-2">
 				  	<TimeNow />
 				  </div>
 				  
-				  <div className="col-md-7 app-main-wrapper__heading mt-2 px-2">
+				  <div className="col-md-7 app-main-wrapper__heading mt-2">
 				  	<p>Dating back to past 2 days - above Mag 3</p>
 				  </div>
 
@@ -64,7 +64,7 @@ class Index extends Component {
 				  	<QuakeFeed />
 				  </div>
 				  
-				  <div className="col-md-7">
+				  <div className="col-md-7 p-0">
 				  	<QuakeMap map_change={change_pin} table_body={this.state.table_node} coord_lat={this.state.cor_lat} coord_lng={this.state.cor_lng} />
 				  </div>
 
