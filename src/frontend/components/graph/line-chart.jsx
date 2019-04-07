@@ -90,12 +90,12 @@ class Linechart extends React.Component {
 		// DECLARE MARGIN AND DIMENSIONS
 		var margin = {
 			top: 20,
-			right: 20,
-			bottom: 80,
+			right: 200,
+			bottom: 200,
 			left: 80
 		}
 
-		var width  = 1100 - margin.left - margin.right;
+		var width  = 1200 - margin.left - margin.right;
 		var height = 500 - margin.top - margin.bottom;
 
 		// APPEND THE SVG OJECT TO THE BODY OF THE PAGE
@@ -132,28 +132,33 @@ class Linechart extends React.Component {
 				el.etime = millis_format;				
 			})			
 
-			console.log('DATA ARRAY 1ST EL ', data[0]);
-			console.log('DATA ARRAY LAST EL ', data[data.length - 1]);
+			// console.log('DATA ARRAY 1ST EL ', data[0]);
+			// console.log('DATA ARRAY LAST EL ', data[data.length - 1]);
 			
-
-
 			// SET THE DOMAINS
 			// CREATE VALUES FOR THE X AXIS FROM MIN TO MAX	
+			var axis = d3.axisBottom(x)
+			
 			x.domain(
-				d3.extent(data, function(d) { 					
-					console.log('DTIME ', d.etime);					
-					d.etime = new Date(d.etime);
+				d3.extent(data, function(d) {
+					// d.etime = new Date(d.etime);
+					var formatted_time = new Date(d.etime).toLocaleString();
+					console.log(d.etime);
+
+					axis.ticks(d3.timeHour.every(1))
+					axis.tickFormat(d3.timeFormat("%s"))
+					
 					return d.etime; 
 				})
 			);	
-
 			// CREATE VALUES FOR THE Y AXIS FROM MIN TO MAX	
 			y.domain([3, d3.max(data, function(d) { return d.emag })]);
 
 			// FORMAT THE X AXIS TO SHOW PROPER DATE/TIMES
-			var axis = d3.axisBottom(x)
-				.ticks(d3.timeDay.every(.25))
-				.tickFormat(d3.timeFormat("%m/%d/%y"));
+			// var axis = d3.axisBottom(x)
+			// 	.ticks(d3.timeDay.every(.25))
+			// 	.tickFormat(d3.timeFormat("%m/%d/%y"));
+
 
 			svg.append('path')
 				.data([data])
@@ -162,15 +167,16 @@ class Linechart extends React.Component {
 
 			// APPEND X AXIS
 			svg.append('g')
+				.attr("class", "x axis")
 				.call(axis)
 				.attr('transform', 'translate(0,' + height + ')')
 				.append('text')
 				.attr('fill', '#E1ECA5')				
-				.attr('x', 6)
+				.attr('x', 0)
 				.attr('dx', '1.5em')
 				.attr('dy', '2.5em')
 				.attr('text-anchor', 'end')
-				.attr("font-size", 16)
+				.attr("font-size", 20)
 				.text('Time');
 
 			// APPEND THE Y AXIS
@@ -182,7 +188,8 @@ class Linechart extends React.Component {
 			    .attr("y", 0)
 			    .attr("dy", "-2.5em")
 			    .attr("text-anchor", "end")
-			    .attr("font-size", 16)
+			    .attr("font-size", 20)
+			    .attr("letter-spacing", 2)
 			    .text("Magnitude");
 
 	}
