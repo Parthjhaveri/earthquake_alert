@@ -50,7 +50,17 @@ th {
 .txt-white {
 	color: #fff;
 }
-
+#overlay-wrapper {
+	position: relative;
+}
+#overlay-map {	
+	background-color: #000;
+	opacity: 0.8;
+	position: absolute;
+	z-index: 99;
+	top: 0px;
+	left: 0px;
+}
 /* - - - NAVBAR - - -*/
 .app-main-nav{
 	width: auto;

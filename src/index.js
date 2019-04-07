@@ -65,7 +65,10 @@ class Index extends Component {
 				  </div>
 				  
 				  <div className="col-md-7 p-0">
-				  	<QuakeMap map_change={change_pin} table_body={this.state.table_node} coord_lat={this.state.cor_lat} coord_lng={this.state.cor_lng} />
+				  	<div id="overlay-wrapper">
+			  			<QuakeMap map_change={change_pin} table_body={this.state.table_node} coord_lat={this.state.cor_lat} coord_lng={this.state.cor_lng} />
+			  			<div id="overlay-map"></div>
+			  		</div>
 				  </div>
 
 				</div>

@@ -28,7 +28,7 @@ class Linechart extends React.Component {
 			
 			// MAGNITUDE 3 QUAKES
 			const mag_three = parsed_quakes.filter(quake => 
-				quake.properties.mag >= 3 && quake.properties.mag < 4
+				quake.properties.mag >= 4 && quake.properties.mag < 5
 			);
 
 			// DYNAMIC FUNCTION TO PARSE QUAKES
@@ -121,7 +121,7 @@ class Linechart extends React.Component {
 			
 			// SET THE RANGES
 			var x = d3.scaleTime().range([0, width]);
-			var y = d3.scaleLinear().range([height, 3]);
+			var y = d3.scaleLinear().range([height, 4]);
 			
 			// CONVERT DATES BACK TO MILLISECONDS
 			data.forEach(function(el) {
@@ -134,18 +134,26 @@ class Linechart extends React.Component {
 
 			console.log('DATA ARRAY 1ST EL ', data[0]);
 			console.log('DATA ARRAY LAST EL ', data[data.length - 1]);
+			
+
 
 			// SET THE DOMAINS
 			// CREATE VALUES FOR THE X AXIS FROM MIN TO MAX	
 			x.domain(
 				d3.extent(data, function(d) { 					
-					console.log('DTIME ', d.etime);
-					return new Date(d.etime); 
+					console.log('DTIME ', d.etime);					
+					d.etime = new Date(d.etime);
+					return d.etime; 
 				})
-			);				
+			);	
 
 			// CREATE VALUES FOR THE Y AXIS FROM MIN TO MAX	
 			y.domain([3, d3.max(data, function(d) { return d.emag })]);
+
+			// FORMAT THE X AXIS TO SHOW PROPER DATE/TIMES
+			var axis = d3.axisBottom(x)
+				.ticks(d3.timeDay.every(.25))
+				.tickFormat(d3.timeFormat("%m/%d/%y"));
 
 			svg.append('path')
 				.data([data])
@@ -154,7 +162,7 @@ class Linechart extends React.Component {
 
 			// APPEND X AXIS
 			svg.append('g')
-				.call(d3.axisBottom(x))
+				.call(axis)
 				.attr('transform', 'translate(0,' + height + ')')
 				.append('text')
 				.attr('fill', '#E1ECA5')				
