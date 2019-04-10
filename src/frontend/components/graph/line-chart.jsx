@@ -113,8 +113,9 @@ class Linechart extends React.Component {
 
 			// DEFINE THE LINE
 			var value_line = d3.line()
-				.x(function(d) {return x(d.etime);})
-				.y(function(d) {return y(d.emag);})
+				.x(function(d) {return d.etime})
+				.y(function(d) {return d.emag})
+				.curve(d3.curveMonotoneX)			
 			
 			// SET THE RANGES
 			var x = d3.scaleTime().range([0, width]);
@@ -141,14 +142,14 @@ class Linechart extends React.Component {
 			y.domain([3, d3.max(data, function(d) { return d.emag })]);			
 
 			svg.append('path')
-				.data([data])
+				.data(data)
 				.attr('class', 'line')
-				.attr('d', value_line)
+				.attr('d', value_line(data))
 
 			// APPEND X AXIS
 			svg.append('g')
 				.attr("class", "x axis")
-				.call(d3.axisBottom(x_axis))					
+				.call(d3.axisBottom(x_axis))
 				.attr('transform', 'translate(0,' + height + ')')
 				.append('text')
 				.attr('fill', '#E1ECA5')				
