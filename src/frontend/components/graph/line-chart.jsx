@@ -67,9 +67,6 @@ class Linechart extends React.Component {
 
 				} // END LOOP 
 				
-				// console.log('QUAKE ARR ', quake_arr);
-				// console.log('LINE POINTS ', line_points);
-
 				// DISPATCH TO USE IN draw_chart FUNCTION
 				store.dispatch({ type: 'PARSED-QUAKES', payload: quake_arr });
 				return quake_arr;
@@ -129,28 +126,18 @@ class Linechart extends React.Component {
 				var millis_format = date_format.getTime();
 				
 				// CONVERT THE STRING DATE/TIME FORMAT TO MILLISECONDS
-				el.etime = millis_format;				
-			})			
-
-			// console.log('DATA ARRAY 1ST EL ', data[0]);
-			// console.log('DATA ARRAY LAST EL ', data[data.length - 1]);
+				el.etime = millis_format;
+				console.log(el.etime);			
+			})
 			
 			// SET THE DOMAINS
 			// CREATE VALUES FOR THE X AXIS FROM MIN TO MAX	
-			var axis = d3.axisBottom(x)
-			
-			x.domain(
-				d3.extent(data, function(d) {
-					// d.etime = new Date(d.etime);
-					var formatted_time = new Date(d.etime).toLocaleString();
-					console.log(d.etime);
+			// FORMAT THE X AXIS TO SHOW PROPER DATE/TIMES
+			var x_axis = d3.scaleBand()
+				.range([width, 0])
+				.domain(data.map((d) => new Date(d.etime).toLocaleString()))				
+						
 
-					axis.ticks(d3.timeHour.every(1))
-					axis.tickFormat(d3.timeFormat("%s"))
-					
-					return d.etime; 
-				})
-			);	
 			// CREATE VALUES FOR THE Y AXIS FROM MIN TO MAX	
 			y.domain([3, d3.max(data, function(d) { return d.emag })]);
 
@@ -158,7 +145,6 @@ class Linechart extends React.Component {
 			// var axis = d3.axisBottom(x)
 			// 	.ticks(d3.timeDay.every(.25))
 			// 	.tickFormat(d3.timeFormat("%m/%d/%y"));
-
 
 			svg.append('path')
 				.data([data])
@@ -168,7 +154,7 @@ class Linechart extends React.Component {
 			// APPEND X AXIS
 			svg.append('g')
 				.attr("class", "x axis")
-				.call(axis)
+				.call(d3.axisBottom(x_axis))					
 				.attr('transform', 'translate(0,' + height + ')')
 				.append('text')
 				.attr('fill', '#E1ECA5')				
