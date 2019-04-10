@@ -220,7 +220,7 @@ th {
 
 /*X AXIS TICKS*/
 .x.axis g.tick text {
-	transform: rotate(90deg);
+	transform: rotate(45deg);
 	font-size: 13px;
 
 }

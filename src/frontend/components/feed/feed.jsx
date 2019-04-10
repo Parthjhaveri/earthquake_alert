@@ -40,7 +40,7 @@ class QuakeFeed extends Component {
 		let year  = date_arr[2];
 		let month = date_arr[0];
 		let day   = date_arr[1];
-
+		
 		// IF MONTH STRING, PARSE TO NUMERIC
 		  month === 'Dec' ? month = '12' 
 		: month === 'Nov' ? month = '11' 
