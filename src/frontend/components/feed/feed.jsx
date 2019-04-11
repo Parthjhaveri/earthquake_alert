@@ -67,7 +67,7 @@ class QuakeFeed extends Component {
 			// ----------------- INITIAL FETCH -----------------
 				// USE THE VARIABLES TO PLUG IN YEAR, MONTH, DAY AND INITIATE FETCH CALL
 				fetch ('https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=' + year + '-' + month + '-' + past_date + 
-					   '&endtime=' + year + '-' + month + '-' + day + '&minmagnitude=3')
+					   '&endtime=' + year + '-' + month + '-' + day + '&minmagnitude=2')
 
 				.then((response) => {
 					// console.log(response);

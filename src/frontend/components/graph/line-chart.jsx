@@ -92,6 +92,7 @@ class Linechart extends React.Component {
 			left: 80
 		}
 
+		// SET THE WIDTH AND HEIGHT
 		var width  = 1200 - margin.left - margin.right;
 		var height = 500 - margin.top - margin.bottom;
 
@@ -106,20 +107,15 @@ class Linechart extends React.Component {
 			// GET PARSED EARTHQUAKES FROM REDUX STORE
 			let parsed_quakes = (store.getState()).quake_data[0];						
 
+			// FORMAT THE MAG AND TIME
 			parsed_quakes.forEach((data) => {				
 				data.etime = data.etime.join(' ');
 				data.emag  = data.emag;
-			});
-
-			// DEFINE THE LINE
-			var value_line = d3.line()
-				.x(function(d) {return d.etime})
-				.y(function(d) {return d.emag})
-				.curve(d3.curveMonotoneX)			
+			});	
 			
 			// SET THE RANGES
 			var x = d3.scaleTime().range([0, width]);
-			var y = d3.scaleLinear().range([height, 3]);
+			var y = d3.scaleLinear().range([height, 0]);
 			
 			// CONVERT DATES BACK TO MILLISECONDS
 			data.forEach(function(el) {
@@ -137,12 +133,17 @@ class Linechart extends React.Component {
 				.range([width, 0])
 				.domain(data.map((d) => new Date(d.etime).toLocaleString()))				
 						
-
+			x.domain(d3.extent(data, function(d) { return d.etime }));
 			// CREATE VALUES FOR THE Y AXIS FROM MIN TO MAX	
-			y.domain([3, d3.max(data, function(d) { return d.emag })]);			
+			y.domain([3, d3.max(data, function(d) { return d.emag })]);	
+
+			// DEFINE THE LINE
+			var value_line = d3.line()
+				.x(function(d) {return x(d.etime)})
+				.y(function(d) {return y(d.emag)})				
 
 			svg.append('path')
-				.data(data)
+				.data([data])
 				.attr('class', 'line')
 				.attr('d', value_line(data))
 
