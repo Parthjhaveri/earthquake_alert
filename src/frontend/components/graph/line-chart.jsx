@@ -17,7 +17,9 @@ class Linechart extends React.Component {
 
 		this.draw_chart = this.draw_chart.bind(this);
 
-		this.state = {}		
+		this.state = {
+			default_mag: 3			
+		}		
 	}
 
 	componentDidMount() {
@@ -25,28 +27,31 @@ class Linechart extends React.Component {
 		// CLICKED MAGNITUDE
 		var current_mag = 0;
 
+		var that = this;
+
 		const mag_buttons = [].slice.call(document.getElementsByClassName('mag-button'));
 		mag_buttons.forEach((el) => {
 			el.addEventListener('click', function() {
 				store.dispatch({ type: 'GET-DATASET', payload: this.dataset.mag });				
-				console.log(this.dataset.mag);
-			})
-		})
+				console.log(this.dataset.mag);				
+				that.setState({default_mag: this.dataset.mag});
+			});
+		});
 
 		setTimeout(() => {
 
 			// EARTHQUAKES FROM FETCH FROM FEED.JSX
 			var parsed_quakes = (store.getState()).quake_data[0];
 			
-			// MAGNITUDE 3 QUAKES
-			const mag_three = parsed_quakes.filter(quake => 
-				quake.properties.mag >= 3 && quake.properties.mag < 4
+			// MAGNITUDE X QUAKES
+			const mag_x = parsed_quakes.filter(quake => 
+				quake.properties.mag >= this.state.default_mag && quake.properties.mag < this.state.default_mag + 1
 			);
 
 			// DYNAMIC FUNCTION TO PARSE QUAKES
 			const mag_parse = (quakemag) => {
 				// NEW OBJECT
-				var mag_three_obj = new Object();
+				var mag_obj = new Object();
 				const quake_arr = []; // STORE QUAKES OBJECTS
 
 				var line_points = [];
@@ -56,25 +61,25 @@ class Linechart extends React.Component {
 					// GET DATE AND TIME OF EACH MAG 3 EARTHQUAKE
 					const time_stamp  = new Date(quakemag[i].properties.time);
 					const string_time = time_stamp.toString();
-					const mag_three_time  = new Date(string_time.split(' ').slice(1, 5)).toLocaleString();
+					const mag_x_time  = new Date(string_time.split(' ').slice(1, 5)).toLocaleString();
 					
 					// DAY/TIME
-					const quake_three_time = mag_three_time.split(' ');
+					const quake_x_time = mag_x_time.split(' ');
 
 					// MAGNITUDE
-					const quake_three_mag = quakemag[i].properties.mag;				
+					const quake_x_mag = quakemag[i].properties.mag;				
 
-					mag_three_obj = {
-						emag:  quake_three_mag,
-						etime: quake_three_time
+					mag_obj = {
+						emag:  quake_x_mag,
+						etime: quake_x_time
 					}
 
-					var date_format  = new Date(mag_three_time);
+					var date_format  = new Date(mag_x_time);
 					var milli_format = date_format.getTime();
 					
-					line_points.push([quake_three_mag, milli_format]);
+					line_points.push([quake_x_mag, milli_format]);
 					
-					quake_arr.push(mag_three_obj);
+					quake_arr.push(mag_obj);
 
 
 				} // END LOOP 
@@ -86,11 +91,16 @@ class Linechart extends React.Component {
 			} // END MAG PARSE FUNCTION
 			
 			// PARSED MAGNITUDE THREE INVOCATION
-			const parsed_mag_three = mag_parse(mag_three);		
+			const parsed_mag_three = mag_parse(mag_x);		
 			
 			this.draw_chart(parsed_mag_three);
 
-		}, 1000);			
+		}, 1000);
+			
+	}
+
+	shouldComponentUpdate() {
+		return true;
 	}
 
 	// LINE CHART FUNCTION
@@ -147,7 +157,7 @@ class Linechart extends React.Component {
 						
 			x.domain(d3.extent(data, function(d) { return d.etime }));
 			// CREATE VALUES FOR THE Y AXIS FROM MIN TO MAX	
-			y.domain([3, d3.max(data, function(d) { return d.emag })]);	
+			y.domain([this.state.default_mag, d3.max(data, function(d) { return d.emag })]);	
 
 			// DEFINE THE LINE
 			var value_line = d3.line()
