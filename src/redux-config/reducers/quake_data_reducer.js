@@ -21,6 +21,9 @@ const quake_data_reducer = (state=[], action) => {
 		case 'GRAPH-POINTS':
 			return [action.payload]
 
+		case 'GET-DATASET':
+			return [action.payload]
+
 		case 'STORE-QUAKES':
 			let quake_arr = [];
 			quake_arr.push(...state, action.payload);

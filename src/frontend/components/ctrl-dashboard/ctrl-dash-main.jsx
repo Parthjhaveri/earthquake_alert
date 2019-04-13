@@ -21,10 +21,21 @@ class ControlDashboardMain extends React.Component {
 		}
 	}
 
+	componentDidMount() {
+		const mag_buttons = [].slice.call(document.getElementsByClassName('mag-button'));
+		mag_buttons.forEach((el) => {
+			el.addEventListener('click', function() {
+				store.dispatch({ type: 'GET-DATASET', payload: this.dataset.mag });				
+			})
+		})
+	}
+
 	// CHANGE MAGNITUDE BUTTON
 	change_mag() {
 		
 		// DYNAMICALLY GENERATE 9 BUTTONS
+		// ON CLICK, SEND DATA ATTRIBUTE OF THAT BUTTON TO REDUX, INSIDE LINE CHART, GET 
+		// THAT ATTRIBUTE AND INJECT INTO CODE.
 		var mag_buttons = [];
 
 		for (var i = 1; i < 10; i++) {
@@ -33,19 +44,17 @@ class ControlDashboardMain extends React.Component {
 					className = 'mag-button'
 					data-mag  = {'' + i}
 					value     = {'Magnitude ' + i}
-					key		  = {i}
+					key		  = {i}					
 				>
 				{'Magnitude ' + i}
 				</button>
 			)
-		}
+		}		
 		return mag_buttons;			
 		
 	}
 
 	render() {
-
-
 		return (
 			<div className='section-main-dash'>
 				<h3>Sort By Magnitude</h3>
