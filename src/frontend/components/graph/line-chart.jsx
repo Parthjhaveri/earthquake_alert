@@ -21,6 +21,18 @@ class Linechart extends React.Component {
 	}
 
 	componentDidMount() {
+
+		// CLICKED MAGNITUDE
+		var current_mag = 0;
+
+		const mag_buttons = [].slice.call(document.getElementsByClassName('mag-button'));
+		mag_buttons.forEach((el) => {
+			el.addEventListener('click', function() {
+				store.dispatch({ type: 'GET-DATASET', payload: this.dataset.mag });				
+				console.log(this.dataset.mag);
+			})
+		})
+
 		setTimeout(() => {
 
 			// EARTHQUAKES FROM FETCH FROM FEED.JSX

@@ -21,15 +21,6 @@ class ControlDashboardMain extends React.Component {
 		}
 	}
 
-	componentDidMount() {
-		const mag_buttons = [].slice.call(document.getElementsByClassName('mag-button'));
-		mag_buttons.forEach((el) => {
-			el.addEventListener('click', function() {
-				store.dispatch({ type: 'GET-DATASET', payload: this.dataset.mag });				
-			})
-		})
-	}
-
 	// CHANGE MAGNITUDE BUTTON
 	change_mag() {
 		
