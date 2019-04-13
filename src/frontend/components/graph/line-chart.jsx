@@ -24,29 +24,33 @@ class Linechart extends React.Component {
 
 	componentDidMount() {
 
-		// CLICKED MAGNITUDE
-		var current_mag = 0;
+		// CHANGE GRAPH
+		const change_graph = () => {
+			// CLICKED MAGNITUDE			
 
-		var that = this;
+			var that = this;
 
-		const mag_buttons = [].slice.call(document.getElementsByClassName('mag-button'));
-		mag_buttons.forEach((el) => {
-			el.addEventListener('click', function() {
-				store.dispatch({ type: 'GET-DATASET', payload: this.dataset.mag });				
-				console.log(this.dataset.mag);				
-				that.setState({default_mag: this.dataset.mag});
+			const mag_buttons = [].slice.call(document.getElementsByClassName('mag-button'));
+			mag_buttons.forEach((el) => {
+				el.addEventListener('click', function() {
+					that.setState({default_mag: parseInt(this.dataset.mag)});
+					console.log(that.state.default_mag);					
+				});
 			});
-		});
+		}
+		change_graph();
 
-		setTimeout(() => {
+		setTimeout(() => {	
 
 			// EARTHQUAKES FROM FETCH FROM FEED.JSX
 			var parsed_quakes = (store.getState()).quake_data[0];
 			
 			// MAGNITUDE X QUAKES
-			const mag_x = parsed_quakes.filter(quake => 
-				quake.properties.mag >= this.state.default_mag && quake.properties.mag < this.state.default_mag + 1
-			);
+			var that = this;
+			var mag_x = parsed_quakes.filter(function(quake) {						
+					return quake.properties.mag >= that.state.default_mag && quake.properties.mag < (that.state.default_mag + 1);
+				}
+			);			
 
 			// DYNAMIC FUNCTION TO PARSE QUAKES
 			const mag_parse = (quakemag) => {
@@ -95,12 +99,11 @@ class Linechart extends React.Component {
 			
 			this.draw_chart(parsed_mag_three);
 
-		}, 1000);
-			
+		}, 1000);		
 	}
 
-	shouldComponentUpdate() {
-		return true;
+	shouldComponentUpdate(nextProps, nextState) {		
+		return this.state.default_mag !== nextState.default_mag;
 	}
 
 	// LINE CHART FUNCTION
