@@ -22,31 +22,40 @@ class ControlDashboardMain extends React.Component {
 	}
 
 	// CHANGE MAGNITUDE BUTTON
-	change_mag() {	
-		setTimeout(() => {
-			var section_dash = document.getElementById('main-dash-root');
-			// GENERATE 9 BUTTONS
-			for (var i = 1; i < 10; i++) {
-				// CREATE THE BUTTONS
-				var mag_btn = document.createElement('BUTTON');
+	change_mag() {
+		
+		// DYNAMICALLY GENERATE 9 BUTTONS
+		var mag_buttons = [];
 
-				// SET THE ATTRIBUTES AND APPEND
-				mag_btn.setAttribute('className', 'mag-button');
-				mag_btn.setAttribute('data-mag', '' + i);
-				section_dash.appendChild(mag_btn);
-			}
-		}, 500);
+		for (var i = 1; i < 10; i++) {
+			mag_buttons.push(
+				<button 
+					className = 'mag-button'
+					data-mag  = {'' + i}
+					value     = {'Magnitude ' + i}
+					key		  = {i}
+				>
+				{'Magnitude ' + i}
+				</button>
+			)
+		}
+		return mag_buttons;			
+		
 	}
 
 	render() {
+
+
 		return (
-			<div className='section-main-dash' id='main-dash-root'>
+			<div className='section-main-dash'>
 				<h3>Sort By Magnitude</h3>
 				<p>
 					Select a magnitude button to 
 					cycle through the graph below <i className="fas fa-angle-down"></i>
-				</p>
-				{this.change_mag()}
+				</p>				
+				{
+					this.change_mag()
+				}
 			</div>
 		)
 	}
