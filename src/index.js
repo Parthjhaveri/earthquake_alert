@@ -12,6 +12,7 @@ import QuakeFeed from './frontend/components/feed/feed.jsx';
 import change_pin from './frontend/components/feed/feed-table.jsx';
 import QuakeMap from './frontend/components/map/quake_map.jsx';
 import Graphmain from './frontend/components/graph/graph-main.jsx';
+import ControlDashboardMain from './frontend/components/ctrl-dashboard/ctrl-dash-main.jsx';
 
 // REDUX IMPORTS
 import store from './redux-config/store/store.js';
@@ -72,7 +73,7 @@ class Index extends Component {
 				  </div>
 
 				</div>
-
+				<ControlDashboardMain />
 				<Graphmain />
 
   			</div>
