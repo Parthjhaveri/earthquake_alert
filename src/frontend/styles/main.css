@@ -252,7 +252,16 @@ th {
 	top: 3px;
 	color: #fff;
 }
-
+.mag-btn {
+	width: auto;
+	height: auto;
+	padding: 5px 20px;
+	background-color: #000;
+	border-radius: 4px;
+	color: #fff;
+	font-size: 18px;
+	border: 1px solid #eee;
+}
 
 
 
