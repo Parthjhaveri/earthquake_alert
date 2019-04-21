@@ -192,23 +192,29 @@ class Linechart extends React.Component {
 		    // ON BUTTON CLICK - - - - - - - - -
 			    // MAGNITUDE X QUAKES			    
 				var that = this;
+
 				// EARTHQUAKES FROM FETCH FROM FEED.JSX
-				var parsed_qs = (store.getState()).quake_data[0];
-				console.log('*', this.state.quake_array);
+				var parsed_qs = this.state.quake_array;
+				
 				var mag_buttons = [].slice.call(document.getElementsByClassName('mag-button'));
 
-				// mag_buttons.forEach((el) => {
-				// 	el.addEventListener('click', function() {
-				// 		that.setState({default_mag: parseInt(this.dataset.mag)});
-				// 		var mag_click = parsed_qs.filter(function(quake) {
-				// 				console.log(quake);
-				// 				// return quake.properties.mag >= that.state.default_mag && quake.properties.mag < (that.state.default_mag + 1);									
-				// 			}				
-				// 		);	
+				// LOOP OVER BUTTONS, ADD AN ON-CLICK
+				mag_buttons.forEach((el) => {
+					el.addEventListener('click', function() {
+						
+						// SET STATE OF DEFAULT MAG TO BUTTON CLICK MAG
+						that.setState({default_mag: parseInt(this.dataset.mag)});
+
+						// FILTER OUT DESIRED MAGNITUDE BASED ON CLICK
+						var clicked_magnitude = that.state.default_mag;						
+						var mag_click = parsed_qs.filter(function(quake) {								
+								return quake.properties.mag >= clicked_magnitude && quake.properties.mag < (clicked_magnitude + 1);									
+							}				
+						);	
 						
 
-				// 	});// END EVENT LISTENER
-				// });// END FOR EACH
+					});// END EVENT LISTENER
+				});// END FOR EACH
 			// - - - - - - - - - - - - - - - - - -
 	}
 
