@@ -15,42 +15,35 @@ class Linechart extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.draw_chart = this.draw_chart.bind(this);
+		this.draw_chart   = this.draw_chart.bind(this);
 
 		this.state = {
-			default_mag: 3			
+			default_mag: 3,
+			click_mag:   0,
+			quake_array: []	
 		}		
 	}
 
 	componentDidMount() {
 
-		// CHANGE GRAPH
-		const change_graph = () => {
-			// CLICKED MAGNITUDE			
-
-			var that = this;
-
-			const mag_buttons = [].slice.call(document.getElementsByClassName('mag-button'));
-			mag_buttons.forEach((el) => {
-				el.addEventListener('click', function() {
-					that.setState({default_mag: parseInt(this.dataset.mag)});
-					console.log(that.state.default_mag);					
-				});
-			});
-		}
-		change_graph();
-
 		setTimeout(() => {	
 
 			// EARTHQUAKES FROM FETCH FROM FEED.JSX
 			var parsed_quakes = (store.getState()).quake_data[0];
-			
+
+			// PUSH INTO COMPONENT STATE
+			for (var i = 0; i < parsed_quakes.length; i++) {				
+				this.setState({quake_array: this.state.quake_array.concat(parsed_quakes[i])});
+			}
+
+			// this.setState({quake_array: this.state.quake_array.push(parsed_quakes)});
 			// MAGNITUDE X QUAKES
 			var that = this;
-			var mag_x = parsed_quakes.filter(function(quake) {						
-					return quake.properties.mag >= that.state.default_mag && quake.properties.mag < (that.state.default_mag + 1);
-				}
-			);			
+			// DEFAULT ON PAGE LOAD
+			var mag_x = parsed_quakes.filter(function(quake) {												
+					return quake.properties.mag >= that.state.default_mag && quake.properties.mag < (that.state.default_mag + 1);									
+				}				
+			);	
 
 			// DYNAMIC FUNCTION TO PARSE QUAKES
 			const mag_parse = (quakemag) => {
@@ -97,13 +90,10 @@ class Linechart extends React.Component {
 			// PARSED MAGNITUDE THREE INVOCATION
 			const parsed_mag_three = mag_parse(mag_x);		
 			
-			this.draw_chart(parsed_mag_three);
+			this.draw_chart(parsed_mag_three);	
 
-		}, 1000);		
-	}
+		}, 1000);	
 
-	shouldComponentUpdate(nextProps, nextState) {		
-		return this.state.default_mag !== nextState.default_mag;
 	}
 
 	// LINE CHART FUNCTION
@@ -199,6 +189,27 @@ class Linechart extends React.Component {
 			    .attr("letter-spacing", 2)
 			    .text("Magnitude");
 
+		    // ON BUTTON CLICK - - - - - - - - -
+			    // MAGNITUDE X QUAKES			    
+				var that = this;
+				// EARTHQUAKES FROM FETCH FROM FEED.JSX
+				var parsed_qs = (store.getState()).quake_data[0];
+				console.log('*', this.state.quake_array);
+				var mag_buttons = [].slice.call(document.getElementsByClassName('mag-button'));
+
+				// mag_buttons.forEach((el) => {
+				// 	el.addEventListener('click', function() {
+				// 		that.setState({default_mag: parseInt(this.dataset.mag)});
+				// 		var mag_click = parsed_qs.filter(function(quake) {
+				// 				console.log(quake);
+				// 				// return quake.properties.mag >= that.state.default_mag && quake.properties.mag < (that.state.default_mag + 1);									
+				// 			}				
+				// 		);	
+						
+
+				// 	});// END EVENT LISTENER
+				// });// END FOR EACH
+			// - - - - - - - - - - - - - - - - - -
 	}
 
 	render() {		
