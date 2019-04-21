@@ -64,12 +64,25 @@ th {
 	left: 0px;
 }
 /* - - - NAVBAR - - -*/
-.app-main-nav{
+.app-main-nav {
 	width: auto;
 	height: auto;
-	background-color: #641564;
+	background: #641564;
 	margin-bottom: 20px;
+	animation-name: slideInFromLeft;
+	animation-duration: 1.5s;
 	box-shadow: 0px 0px 65px #000;
+}
+
+@keyframes slideInFromLeft {
+    0% {
+        opacity: 0;
+		box-shadow: none;
+    }
+    100% {
+        opacity: 1;        
+		box-shadow: 0px 0px 65px #000;
+    }
 }
 
 .app-main-nav h3 {
@@ -85,7 +98,7 @@ th {
 .section-time-now {
 	width: 100%;
 	height: auto;
-	background-color: #14171E;
+	background: #14171E;
 	color: #fff;
 	font-size: 18px;
 	padding: 10px;
