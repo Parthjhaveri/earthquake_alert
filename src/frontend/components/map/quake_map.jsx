@@ -111,7 +111,7 @@ class QuakeMap extends Component {
 	render() {
 		let position = [this.state.lat, this.state.long];	
 		return (
-			<div className='section-quake-map p-2'>
+			<div className='section-quake-map pt-2'>
 				<Map 
 					center={position} 
 					zoom={this.state.zoom}

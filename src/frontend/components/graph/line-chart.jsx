@@ -269,6 +269,11 @@ class Linechart extends React.Component {
 	// CHANGE CHART FUNCTION
 	change_graph(data) {
 		console.log('Change graph data', data);
+
+		if (data.length === 0) {
+			alert('Nothing in array');
+		}
+
 		// DECLARE MARGIN AND DIMENSIONS
 		var margin = {
 			top: 20,
@@ -336,10 +341,10 @@ class Linechart extends React.Component {
 	            .attr("d", value_line(data));
 	        svg.select(".x.axis") // change the x axis
 	            .duration(750)
-	            .call(xAxis);
+	            .call(x_axis);
 	        svg.select(".y.axis") // change the y axis
 	            .duration(750)
-	            .call(yAxis);
+	            .call(y);
 		
 	}
 

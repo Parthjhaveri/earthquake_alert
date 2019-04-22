@@ -20,11 +20,18 @@ import store from './redux-config/store/store.js';
 class Index extends Component {
 	constructor(props) {
 		super(props);
+
+		this.disable_overlay = this.disable_overlay.bind(this);
+
 		this.state = {
 			cor_lat: '',
 			cor_lng: '',
 			table_node: ''
 		}
+	}
+
+	disable_overlay(event) {
+		event.target.style.display = 'none';
 	}
 
 	change_coords(event) {
@@ -66,10 +73,12 @@ class Index extends Component {
 				  </div>
 				  
 				  <div className="col-md-7 p-0">
-				  	<div id="overlay-wrapper">
-			  			<QuakeMap map_change={change_pin} table_body={this.state.table_node} coord_lat={this.state.cor_lat} coord_lng={this.state.cor_lng} />
-			  			<div id="overlay-map"></div>
-			  		</div>
+				  	<div className='map-wrap'>
+		  				<QuakeMap map_change={change_pin} table_body={this.state.table_node} coord_lat={this.state.cor_lat} coord_lng={this.state.cor_lng} />
+		  				<div className='map-overlay pt-0' id='map-scroll-ovlay' onClick={this.disable_overlay}>
+		  					<h2>Click here to access Map</h2>
+		  				</div>
+		  			</div>
 				  </div>
 
 				</div>
