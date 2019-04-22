@@ -292,6 +292,10 @@ th {
 	padding-top: 150px !important;
 }
 
+.map-overlay h2 span {
+	color: rgb(225, 236, 165);
+}
+
 .leaflet-tile {
     -webkit-filter: hue-rotate(290deg) invert(140%);
 }

@@ -30,8 +30,24 @@ class Index extends Component {
 		}
 	}
 
+	componentDidMount() {
+		var map_overlay = document.getElementById('map-scroll-ovlay');
+		
+		document.addEventListener('keypress', 
+			(event) => {
+				console.log(event.key);
+				if (event.key === 'm') {
+					map_overlay.style.display = 'none';
+				}
+			}
+		);		
+	}
+
 	disable_overlay(event) {
-		event.target.style.display = 'none';
+		var map_overlay = document.getElementById('map-scroll-ovlay');		
+		if (event.currentTarget.classList.contains('map-overlay')) {
+			map_overlay.style.display = 'none';
+		}
 	}
 
 	change_coords(event) {
@@ -77,6 +93,7 @@ class Index extends Component {
 		  				<QuakeMap map_change={change_pin} table_body={this.state.table_node} coord_lat={this.state.cor_lat} coord_lng={this.state.cor_lng} />
 		  				<div className='map-overlay pt-0' id='map-scroll-ovlay' onClick={this.disable_overlay}>
 		  					<h2>Click here to access Map</h2>
+		  					<h2>or press the <span>'M'</span> key</h2>
 		  				</div>
 		  			</div>
 				  </div>
