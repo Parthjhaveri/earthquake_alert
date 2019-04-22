@@ -16,6 +16,7 @@ class Linechart extends React.Component {
 		super(props);
 
 		this.draw_chart   = this.draw_chart.bind(this);
+		this.change_graph = this.change_graph.bind(this);
 
 		this.state = {
 			default_mag: 3,
@@ -90,7 +91,7 @@ class Linechart extends React.Component {
 			// PARSED MAGNITUDE THREE INVOCATION
 			const parsed_mag_three = mag_parse(mag_x);		
 			
-			this.draw_chart(parsed_mag_three);	
+			this.draw_chart(parsed_mag_three);
 
 		}, 1000);	
 
@@ -211,11 +212,135 @@ class Linechart extends React.Component {
 								return quake.properties.mag >= clicked_magnitude && quake.properties.mag < (clicked_magnitude + 1);									
 							}				
 						);	
-						
+						console.log(mag_click);
+
+						// DYNAMIC FUNCTION TO PARSE QUAKES
+						const click_parse = (quakemag) => {
+							// NEW OBJECT
+							var mag_obj = new Object();
+							const quake_arr = []; // STORE QUAKES OBJECTS
+
+							var line_points = [];
+							
+							for (var i = 0; i < quakemag.length; i++) {
+
+								// GET DATE AND TIME OF EACH MAG 3 EARTHQUAKE
+								const time_stamp  = new Date(quakemag[i].properties.time);
+								const string_time = time_stamp.toString();
+								const mag_x_time  = new Date(string_time.split(' ').slice(1, 5)).toLocaleString();
+								
+								// DAY/TIME
+								const quake_x_time = mag_x_time.split(' ');
+
+								// MAGNITUDE
+								const quake_x_mag = quakemag[i].properties.mag;				
+
+								mag_obj = {
+									emag:  quake_x_mag,
+									etime: quake_x_time
+								}
+
+								var date_format  = new Date(mag_x_time);
+								var milli_format = date_format.getTime();
+								
+								line_points.push([quake_x_mag, milli_format]);
+								
+								quake_arr.push(mag_obj);
+
+
+							} // END LOOP 
+							
+							// DISPATCH TO USE IN draw_chart FUNCTION
+							store.dispatch({ type: 'PARSED-QUAKES', payload: quake_arr });
+							return quake_arr;
+
+						} // END CLICK PARSE FUNCTION
+
+						var change_mag = click_parse(mag_click);
+
+						that.change_graph(change_mag);
+
 
 					});// END EVENT LISTENER
 				});// END FOR EACH
 			// - - - - - - - - - - - - - - - - - -
+	}
+
+	// CHANGE CHART FUNCTION
+	change_graph(data) {
+		console.log('Change graph data', data);
+		// DECLARE MARGIN AND DIMENSIONS
+		var margin = {
+			top: 20,
+			right: 200,
+			bottom: 200,
+			left: 80
+		}
+
+		// SET THE WIDTH AND HEIGHT
+		var width  = 1200 - margin.left - margin.right;
+		var height = 500 - margin.top - margin.bottom;
+
+		// APPEND THE SVG OJECT TO THE BODY OF THE PAGE
+		// APPEND A GROUP ELEMENT AND MOVE IT TO TOP LEFT 
+		var svg = d3.select('.line-graph').append('svg')
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		
+			// GET PARSED EARTHQUAKES FROM REDUX STORE
+			let parsed_quakes = (store.getState()).quake_data[0];						
+
+			// FORMAT THE MAG AND TIME
+			parsed_quakes.forEach((data) => {				
+				data.etime = data.etime.join(' ');
+				data.emag  = data.emag;
+			});	
+			
+			// SET THE RANGES
+			var x = d3.scaleTime().range([0, width]);
+			var y = d3.scaleLinear().range([height, 0]);
+			
+			// CONVERT DATES BACK TO MILLISECONDS
+			data.forEach(function(el) {
+				var date_format  = new Date(el.etime);
+				var millis_format = date_format.getTime();
+				
+				// CONVERT THE STRING DATE/TIME FORMAT TO MILLISECONDS
+				el.etime = millis_format;
+			});
+			
+			// SET THE DOMAINS
+			// CREATE VALUES FOR THE X AXIS FROM MIN TO MAX	
+			// FORMAT THE X AXIS TO SHOW PROPER DATE/TIMES
+			var x_axis = d3.scaleBand()
+				.range([width, 0])
+				.domain(data.map((d) => new Date(d.etime).toLocaleString()))				
+						
+			x.domain(d3.extent(data, function(d) { return d.etime }));
+			// CREATE VALUES FOR THE Y AXIS FROM MIN TO MAX	
+			y.domain([this.state.default_mag, d3.max(data, function(d) { return d.emag })]);	
+
+			// DEFINE THE LINE
+			var value_line = d3.line()
+				.x(function(d) {return x(d.etime)})
+				.y(function(d) {return y(d.emag)})	
+
+			// CHANGES TO GRAPH			
+			var svg = d3.select('.line-graph').transition();
+
+			// Make the changes
+	        svg.select(".line")   // change the line
+	            .duration(750)
+	            .attr("d", value_line(data));
+	        svg.select(".x.axis") // change the x axis
+	            .duration(750)
+	            .call(xAxis);
+	        svg.select(".y.axis") // change the y axis
+	            .duration(750)
+	            .call(yAxis);
+		
 	}
 
 	render() {		
