@@ -34,10 +34,9 @@ class Index extends Component {
 		var map_overlay = document.getElementById('map-scroll-ovlay');
 		
 		document.addEventListener('keypress', 
-			(event) => {
-				console.log(event.key);
-				if (event.key === 'm') {
-					map_overlay.style.display = 'none';
+			(event) => {				
+				if (event.key === 'm') { 
+					map_overlay.style.display = 'none'; 
 				}
 			}
 		);		

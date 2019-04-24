@@ -178,7 +178,8 @@ class Linechart extends React.Component {
 				.text('Time');
 
 			// APPEND THE Y AXIS
-			svg.append('g')				
+			svg.append('g')	
+				.attr("class", "y axis")			
 				.call(d3.axisLeft(y))
 				.append("text")
 			    .attr("fill", "#E1ECA5")
@@ -341,10 +342,10 @@ class Linechart extends React.Component {
 	            .attr("d", value_line(data));
 	        svg.select(".x.axis") // change the x axis
 	            .duration(750)
-	            .call(x_axis);
+	            .call(d3.axisBottom(x_axis));
 	        svg.select(".y.axis") // change the y axis
 	            .duration(750)
-	            .call(y);
+	            .call(d3.axisLeft(y));
 		
 	}
 
