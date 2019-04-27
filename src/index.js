@@ -2,6 +2,7 @@
 import React, { Component } from 'react'; 
 import ReactDOM from "react-dom";
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import style from './frontend/styles/main.css';
 
 
@@ -13,6 +14,7 @@ import change_pin from './frontend/components/feed/feed-table.jsx';
 import QuakeMap from './frontend/components/map/quake_map.jsx';
 import Graphmain from './frontend/components/graph/graph-main.jsx';
 import ControlDashboardMain from './frontend/components/ctrl-dashboard/ctrl-dash-main.jsx';
+import SignIn from './frontend/components/sign-in/sign-in-page.jsx';
 
 // REDUX IMPORTS
 import store from './redux-config/store/store.js';
@@ -109,6 +111,9 @@ class Index extends Component {
 
 ReactDOM.render(
 	<Provider store={store}>
-		<Index />
+		<Router>
+			<Route path="/" exact component={SignIn} />
+			<Route path="/dash" component={Index} />
+		</Router>
 	</Provider>,
 	document.getElementById("index"));

@@ -41,6 +41,15 @@ th {
 	background-color: #000;
 }
 
+hr {
+	width: 100%;
+	background: #fff;
+}
+
+a:hover, button:hover {
+	text-decoration: none;
+}
+
 /* - - - UTILITY - - - */
 .quake-feed-table-active-row {
 	border-left: 3px solid #E1ECA5;
@@ -367,6 +376,48 @@ th {
 	border: 1px solid #000;
 	cursor: pointer;
 }
+
+/*SECTION SIGN IN*/
+.section-sign-in {
+	width: 40%;
+	height: auto;
+	position: relative;
+	margin: 12% auto;
+}
+.section-sign-in h1, label, p {
+	color: #fff;
+}
+.section-sign-in h3 {
+	color: rgb(225, 236, 165);
+}
+.section-sign-in button, input {
+	border: 2px solid white !important;
+	background-color: #fff;
+	color: #fff;
+	border-radius: 5px;
+	font-size: 20px;
+}
+.section-sign-in button {
+	cursor: pointer;
+	margin-top: 20px;
+	width: auto;
+	padding: 5px 40px;
+	background-color: transparent !important;
+	display: inline-block;
+}
+.section-sign-in input {
+	width: 70%;
+	margin-bottom: 20px;
+}
+
+
+
+
+
+
+
+
+
 
 
 
