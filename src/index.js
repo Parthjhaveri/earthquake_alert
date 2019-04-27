@@ -113,7 +113,7 @@ ReactDOM.render(
 	<Provider store={store}>
 		<Router>
 			<Route path="/" exact component={SignIn} />
-			<Route path="/dash" component={Index} />
+			<Route path="/home" component={Index} />
 		</Router>
 	</Provider>,
 	document.getElementById("index"));

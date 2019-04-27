@@ -33,12 +33,15 @@ class SignIn extends React.Component {
 		return this.state.email.length > 0 && this.state.password.length > 0;
 	}
 
-	handle_change(event) {
-		console.log(event.target.value);
+	handle_change(event) {		
+		this.setState({
+			[event.target.name]: event.target.value
+		});
+		console.log(this.state);
 	}
 
 	handle_submit(event) {
-		event.preventDefault();		
+		event.preventDefault();
 	}
 
 	render() {
@@ -51,21 +54,27 @@ class SignIn extends React.Component {
 					<form className='sign-in' onSubmit={this.handle_submit}>
 
 						{/* EMAIL */}
+						<label><h4>Enter your username</h4></label>
 						<FormGroup controlId='email'>
 							
 							<FormControl
 								autoFocus
-								placeholder="Username"
+								placeholder="Johnsmith@Email.com"
 								type = 'email'
+								name = 'email'
+								onChange = {this.handle_change}
 							/>
 						</FormGroup>
 
+						<label><h4>Enter your password</h4></label>
 						{/* PASSWORD */}
 						<FormGroup controlId='password'>
 							
 							<FormControl		
-								placeholder="Password"						
+								placeholder="•••••••"						
 								type = 'password'								
+								name = 'password'
+								onChange = {this.handle_change}
 							/>
 						</FormGroup>
 
@@ -82,7 +91,7 @@ class SignIn extends React.Component {
 					<br/>
 					<br/>
 					{/* CONTINUE BUTTON */}
-					<Link to="/dash">
+					<Link to="/home">
 						<Button block>
 							Continue as guest
 						</Button>
